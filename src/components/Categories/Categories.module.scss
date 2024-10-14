@@ -1,0 +1,35 @@
+.categoria {
+    margin-top: 20px;
+    background-color: #FBFBFB;
+    width: 310px;
+    padding: 20px;
+
+    &_item {
+        h2 {
+            color: #3D3D3D;
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 16px;
+            text-align: left;
+
+        }
+
+        &_price {
+            margin-top: 30px;
+
+        }
+
+     
+    }
+
+    &_sale {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 30px;
+        img {
+            width: 370px;
+            height: 470px;
+        }
+    }
+}

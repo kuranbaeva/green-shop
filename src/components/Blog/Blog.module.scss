@@ -1,0 +1,91 @@
+.blog {
+    &_item {
+        &_title {
+            text-align: center;
+
+            h2 {
+                font-size: 34px;
+                font-weight: 700;
+                line-height: 16px;
+                text-align: center;
+                color: #3D3D3D;
+            }
+
+            p {
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 24px;
+                text-align: center;
+                color: #727272;
+                margin-top: 20px;
+            }
+        }
+
+        &_cards {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 30px;
+            &_card {
+                &_img {
+                    img {
+                        width: 268px;
+                    }
+                }
+
+                &_infor {
+                    width: 268px;
+                    background: #FBFBFB;
+                    padding: 10px;
+
+                    span {
+                        font-size: 14px;
+                        font-weight: 500;
+                        line-height: 16px;
+                        text-align: left;
+                        color: #46A358;
+                    }
+
+                    h4 {
+                        font-size: 18px;
+                        font-weight: 700;
+                        line-height: 22px;
+                        text-align: left;
+                        color: #3D3D3D;
+                        margin-top: 5px;
+                    }
+
+                    p {
+                        font-size: 14px;
+                        font-weight: 400;
+                        line-height: 22px;
+                        text-align: left;
+                        color: #727272;
+                    }
+
+                    &_btn {
+                        margin-top: 5px;
+
+                        button {
+                            display: flex;
+                            align-items: center;
+                            gap: 5px;
+                            font-size: 16px;
+                            font-weight: 500;
+                            line-height: 16px;
+                            text-align: left;
+                            color: #3D3D3D;
+
+                            &:hover {
+                                color: #46A358;
+                                transition: 0.5s;
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    }
+}
