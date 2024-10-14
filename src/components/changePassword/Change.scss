@@ -1,0 +1,46 @@
+.change {
+    width: 100%;
+
+    h4 {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(61, 61, 61, 1);
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 15px;
+        font-weight: 400;
+        color: rgba(61, 61, 61, 1);
+    }
+
+    .password-wrapper {
+        position: relative;
+        width: 100%;
+
+        input {
+            width: 100%;
+            padding-right: 40px;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 90%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.5);
+        }
+    }
+    .btn1{
+        margin-top: 20px;
+        background: rgba(70, 163, 88, 1);
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: 700;
+        color: white;
+        border-radius: 5px;
+        width: 200px;
+    }
+}

@@ -1,0 +1,21 @@
+.react-multi-carousel-dot {
+    margin: 0 5px;
+
+    button {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #46A3584D;
+        border: 2px solid transparent;
+        transition: background-color 0.3s ease;
+    }
+}
+
+.react-multi-carousel-dot--active button {
+    background-color: #46A358;
+
+}
+
+.react-multi-carousel-dot button:hover {
+    background-color: #46A358;
+}

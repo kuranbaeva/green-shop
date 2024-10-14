@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+$primary-font-family: 'Mukta', sans-serif;
+$primary-bg-button: #46A358;
+$primary-bg-color: #FFFFFF;
+
+a,
+li,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
+    text-decoration: none;
+    font-family: $primary-font-family;
+    list-style: none;
+}
+
+
+button {
+    border: none;
+    background: transparent;
+    font-family: $primary-font-family;
+    cursor: pointer;
+}

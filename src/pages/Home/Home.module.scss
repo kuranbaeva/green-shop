@@ -1,0 +1,24 @@
+.plants {
+    &_item {
+        display: flex;
+        gap: 40px;
+    }
+}
+
+.find {
+    &_item {
+        margin-top: 80px;
+    }
+}
+
+.blogs {
+    &_item {
+        margin-top: 100px;
+    }
+}
+
+.footer {
+    &_item {
+        margin-top: 100px;
+    }
+}

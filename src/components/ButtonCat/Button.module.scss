@@ -1,0 +1,40 @@
+.categoria {
+    &_btns {
+
+        &_btn {
+            margin-top: 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            height: 25px;
+
+            h2 {
+                font-size: 15px;
+                font-weight: 700;
+                line-height: 40px;
+            }
+
+            p {
+                font-size: 15px;
+                font-weight: 700;
+                line-height: 40px;
+
+            }
+
+            &:hover {
+                h2 {
+                    color: #46A358;
+                    transition: 0.2s;
+                }
+
+                p {
+                    color: #46A358;
+                    transition: 0.2s;
+                }
+            }
+
+        }
+    }
+}
