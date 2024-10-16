@@ -20,9 +20,9 @@ export default function Button() {
             });
     }, []);
 
-    const getCount = (categoryId) => {
-        return products.filter(product => product.categoryId === categoryId).length;
-    };
+    // const getCount = (categoryId) => {
+    //     return products.filter(product => product.categoryId === categoryId).length;
+    // };
 
     return (
         <div>
@@ -30,8 +30,7 @@ export default function Button() {
                 <div key={category.id} className={styles.categoria}>
                     <div className={styles.categoria_btns}>
                         <div className={styles.categoria_btns_btn}>
-                            <h2>{category.name}</h2>
-                            <p>({getCount(category.id)})</p>
+                            <button>{category.name}</button>
                         </div>
                     </div>
                 </div>

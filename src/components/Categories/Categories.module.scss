@@ -19,46 +19,7 @@
 
         }
 
-        &_sizes {
-            margin-top: 30px;
-
-            &_btns {
-
-                &_btn {
-                    margin-top: 10px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    height: 20px;
-
-                    h2 {
-                        font-size: 15px;
-                        font-weight: 500;
-                        line-height: 40px;
-                    }
-
-                    p {
-                        font-size: 15px;
-                        font-weight: 500;
-                        line-height: 40px;
-
-                    }
-
-                    &:hover {
-                        h2 {
-                            color: #46A358;
-                            transition: 0.2s;
-                        }
-
-                        p {
-                            color: #46A358;
-                            transition: 0.2s;
-                        }
-                    }
-
-                }
-            }
-        }
+     
     }
 
     &_sale {

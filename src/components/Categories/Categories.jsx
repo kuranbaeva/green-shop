@@ -21,7 +21,8 @@ export default function Categories() {
                             <Renge />
                         </div>
 
-                     
+                
+
                     </div>
                     <div className={styles.categoria_sale}>
                         <img src="/assets/svg/sale.svg" alt="" />

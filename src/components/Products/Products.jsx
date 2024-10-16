@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styles from '../../components/Products/Products.module.scss';
 import { NavLink } from 'react-router-dom';
-import Card from '../../components/Card/Card';
+import Card from '../Paginate/Paginate';
 
 export default function Products() {
-    const [hover, setHover] = useState(null); // Для обработки hover
+    const [hover, setHover] = useState(null);
 
     const handleMouseEnter = (path) => {
         setHover(path);
@@ -55,7 +55,7 @@ export default function Products() {
                         </nav>
                     </div>
 
-                    <div className={styles.plants_item_content_cards}>
+                    <div className={styles.plants_item_content_card}>
                         <Card />
                     </div>
                 </div>
@@ -63,3 +63,4 @@ export default function Products() {
         </>
     );
 }
+

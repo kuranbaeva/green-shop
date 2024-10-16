@@ -10,7 +10,7 @@
             gap: 40px;
             height: 25px;
 
-            h2 {
+            button {
                 font-size: 15px;
                 font-weight: 700;
                 line-height: 40px;
@@ -24,7 +24,7 @@
             }
 
             &:hover {
-                h2 {
+                button {
                     color: #46A358;
                     transition: 0.2s;
                 }

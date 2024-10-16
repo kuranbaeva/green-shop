@@ -28,7 +28,6 @@
     &__values {
         margin-top: 20px;
         display: flex;
-        align-items: center;
         gap: 3px;
 
         p {
@@ -37,6 +36,10 @@
             line-height: 16px;
             text-align: left;
             color: #3D3D3D;
+            margin-top: 10px;
+        }
+        span{
+            margin-top: 7px;
         }
     }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from '../../pages/Home/Home.module.scss';
 import Header from '../../components/Header/Header';
-// import Baner from '../../components/Baner/Baner';
 import Cat from '../../components/Categories/Categories';
 import Products from '../../components/Products/Products';
 import FindCard from '../../components/FindMore/Find';
@@ -24,7 +23,7 @@ export default function Home() {
                     <div className='container'>
                         <div className={styles.plants_item}>
                             <Cat />
-                            <Products />
+                            <Products/>
                         </div>
                     </div>
                 </section>
@@ -44,6 +43,7 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
+
                 <footer className={styles.footer}>
                     <div className="container">
                         <div className={styles.footer_item}>
@@ -53,5 +53,5 @@ export default function Home() {
                 </footer>
             </div>
         </>
-    )
+    );
 }

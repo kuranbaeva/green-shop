@@ -4,6 +4,9 @@ import Button from '../../components/UI/Button/Button'
 import { MapPin, Mail, PhoneCall, Youtube, Linkedin, Twitter, Instagram, Facebook } from 'lucide-react'
 
 export default function Footer() {
+    const openInNewTab = (url) => {
+        window.open(url, '_blank', 'noopener,noreferrer');
+    };
     return (
         <>
             <div>
@@ -185,19 +188,29 @@ export default function Footer() {
                                     </h2>
                                     <div className={styles.footer_item_account_elem_media_icons}>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <Facebook />
+                                            <a href="https://www.facebook.com/?locale=ru_RU" target="_blank" rel="noopener noreferrer">
+                                                <Facebook />
+                                            </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <Instagram />
+                                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">
+                                                <Instagram />
+                                            </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <Twitter />
+                                            <a  href="https://x.com/?lang=ru" target="_blank" rel="noopener noreferrer">
+                                                <Twitter />
+                                            </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <Linkedin />
+                                            <a  href="https://ru.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                                                <Linkedin />
+                                            </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <Youtube />
+                                            <a  href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                                                <Youtube />
+                                            </a>
                                         </div>
                                     </div>
                                     <h3>

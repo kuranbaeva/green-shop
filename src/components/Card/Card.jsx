@@ -4,10 +4,11 @@ import axios from '../../axios/index';
 import Shop from '../../pages/Shop/Shop';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
-export default function Card() {
+export default function Card({ items }) {
     const [items, setItems] = useState([]);
     const [favItems, setFavItems] = useState([]);
-   
+    const [search, setSearch] = useState([]);
+
     const { cartItems,handleAddToCart } = useAuth()
 console.log(cartItems);
 
@@ -22,15 +23,18 @@ console.log(cartItems);
             })
     }, []);
 
+   
     const handleFavClick = (id) => {
-        if (favItems.includes(id)) {
-            setFavItems(favItems.filter(itemId => itemId !== id));
-        } else {
-            setFavItems([...favItems, id]);
-        }
+        setFavItems(favItems.includes(id)
+            ? favItems.filter(itemId => itemId !== id)
+            : [...favItems, id]);
     };
 
-
+    const handleSearchClick = (id) => {
+        setSearch(search.includes(id)
+            ? search.filter(itemId => itemId !== id)
+            : [...search, id]);
+    };
 
 
     const handleOpenItem = (item) => {
@@ -47,10 +51,7 @@ console.log(cartItems);
         } else {
             handleAddToCart(item);
         }
-    };
-   
-
-  
+    }; 
     return (
         <>
             {items.map((item) => (
@@ -91,64 +92,3 @@ console.log(cartItems);
 }
 
 
-
-// import React, { useEffect, useState } from 'react';
-// import styles from '../../pages/Shoping Cart/ShopCart.module.scss';
-// import Header from '../../components/Header/Header';
-// import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
-// import CartItem from '../CartItem'; 
-// import Footer from '../../components/Footer/Footer';
-// import { useAuth } from '../../AuthContext';
-
-// export default function ShopCart() {
-//   const { cartItems, setCartItems } = useAuth();
-//   const [totalPrice, setTotalPrice] = useState(0);
-
-//   useEffect(() => {
-//     const savedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
-//     setCartItems(savedCart);
-//     calculateTotals(savedCart);
-//   }, []);
-
-//   const calculateTotals = (cart) => {
-//     const total = cart.reduce((sum, item) => {
-//       return sum + item.sizes.reduce((sizeSum, size) => {
-//         return sizeSum + size.price * size.quantity;
-//       }, 0);
-//     }, 0);
-//     setTotalPrice(total);
-//   };
-
-//   const handleRemoveItem = (id) => {
-//     const updatedCart = cartItems.filter(item => item.id !== id);
-//     setCartItems(updatedCart);
-//     localStorage.setItem('cartItems', JSON.stringify(updatedCart));
-//     calculateTotals(updatedCart);
-//   };
-
-//   return (
-//     <div>
-//       <Header />
-//       <Breadcrumbs />
-
-//       <section className={styles.cart}>
-//         <div className="container">
-//           <h2>Your Shopping Cart</h2>
-//           {cartItems.length > 0 ? (
-//             cartItems.map(item => (
-//               <CartItem key={item.id} item={item} onRemove={handleRemoveItem} />
-//             ))
-//           ) : (
-//             <p>Your cart is empty</p>
-//           )}
-
-//           <div className={styles.cartTotal}>
-//             <h3>Total: ${totalPrice.toFixed(2)}</h3>
-//           </div>
-//         </div>
-//       </section>
-
-//       <Footer />
-//     </div>
-//   );
-// }

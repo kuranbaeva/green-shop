@@ -27,6 +27,18 @@ const Breadcrumbs = () => {
                             {pathname === '/cart' ? 'Shopping Cart' : <Link to="/cart">Shopping Cart</Link>}
                         </li>
                     )}
+
+                    {pathnames.includes('check') && (
+                        <li className={`${styles.breadcrumb_item} ${pathname === '/check' ? styles.active : ''}`} aria-current="page">
+                            {pathname === '/check' ? 'Checkout' : <Link to="/check">Checkout</Link>}
+                        </li>
+                    )}
+
+                    {pathnames.includes('wish') && (
+                        <li className={`${styles.breadcrumb_item} ${pathname === '/wish' ? styles.active : ''}`} aria-current="page">
+                            {pathname === '/wish' ? 'WishList' : <Link to="/wish">Checkout</Link>}
+                        </li>
+                    )}
                 </ol>
             </nav>
         </div>
