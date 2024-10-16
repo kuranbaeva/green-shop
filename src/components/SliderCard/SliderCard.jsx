@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,6 +10,7 @@ export default function Sliderss() {
     const [cardItems, setCardItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         instance.get('product/')
@@ -53,7 +55,9 @@ export default function Sliderss() {
             }
         ]
     };
-
+    const handleOpenItem = (item) => {
+        navigate(`/shop/${item.id}`, { state: { item } });
+    };
 
     return (
         <div className="slide">
@@ -61,7 +65,7 @@ export default function Sliderss() {
                 {cardItems.map(item => (
                     <div key={item.id} className="slide-item">
                         <div className={styles.card}>
-                            <div className={styles.card_img}>
+                            <div  onClick={() => handleOpenItem(item)} className={styles.card_img}>
                                 <img src={item.image} alt={item.name} />
                             </div>
                             <h3>{item.name}</h3>

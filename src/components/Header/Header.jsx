@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+
+import React, { useState, useEffect, useContext } from 'react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
 import styles from '../../components/Header/Header.module.scss';
-import { Search, ShoppingCart } from 'lucide-react';
-
+import { Search, ShoppingCart, User } from 'lucide-react';
+import   {useAuth}   from '../../AuthContext';
+import Header_Login from '../header_login';
 export default function Header() {
   const [hover, setHover] = useState(null);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const { isAuthenticated, setIsAuthenticated } = useAuth()
+  const navigate = useNavigate();
+  const [avatar, setAvatar] = useState(null);
 
   const handleMouseEnter = (path) => {
     setHover(path);
@@ -15,8 +21,31 @@ export default function Header() {
     setHover(null);
   };
 
+  const toggleLoginModal = () => {
+    setIsLoginOpen(!isLoginOpen);
+  };
+
+  const handleLoginSuccess = () => {
+    setIsAuthenticated(true);
+    setIsLoginOpen(false);
+    localStorage.setItem('isAuthenticated', 'true');
+    const userAvatar = localStorage.getItem('userAvatar');
+    setAvatar(userAvatar);
+    // navigate('/profile');
+  };
+
+  useEffect(() => {
+    const authStatus = localStorage.getItem('isAuthenticated');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+      const userAvatar = localStorage.getItem('userAvatar');
+      setAvatar(userAvatar);
+    }
+  }, []);
+
+
   return (
-    <div className='container'>
+    <div className="container">
       <div className={styles.header}>
         <div className={styles.header_item}>
           <div className={styles.header_item_logo}>
@@ -48,7 +77,7 @@ export default function Header() {
                 </li>
                 <li>
                   <NavLink
-                    to="/wish"
+                    to="/plant-care"
                     className={({ isActive }) => (isActive ? styles.active : '')}
                     onMouseEnter={() => handleMouseEnter('/plant-care')}
                     onMouseLeave={handleMouseLeave}
@@ -79,13 +108,33 @@ export default function Header() {
                 <ShoppingCart />
               </Link>
             </div>
-            <Button>
-              <img src="/assets/img/exit.png" alt="" />
-              Login
-            </Button>
+
+            <div className={`header_item_navigation_login ${isLoginOpen ? 'open' : ''}`}>
+              {isAuthenticated ? (
+                <div onClick={() => navigate('/profile')} className='avatar'>
+                {avatar && avatar !== 'null' ? ( // Проверяем на null или строку 'null'
+                  <img src={avatar} alt="Avatar" className={styles.avatar} />
+                ) : (
+                  <User />
+                )}
+              </div>
+              ) : (
+                <Button onClick={toggleLoginModal}>
+                  <img src="/assets/img/exit.png" alt="" />
+                  Login
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
+      {isLoginOpen && (
+        <div className="login-modal-overlay">
+          <Header_Login closeModal={toggleLoginModal} onLoginSuccess={handleLoginSuccess} setIsAuthenticated={setIsAuthenticated} />
+        </div>
+      )}
     </div>
   );
 }
+

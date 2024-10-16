@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import Header from '../../components/Header/Header'
-import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
+import { Search, Minus, Plus, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
 import styles from '../../pages/Shop/Shop.module.scss'
 import Star from '../../components/UI/Star/StarBtn'
+// import Card from '../../components/Card/Card'
 import Footer from '../../components/Footer/Footer'
+import Button from '../../components/UI/Button/Button'
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
+import Slider from 'react-slick'
 import SliderCard from '../../components/SliderCard/SliderCard'
 import Count from '../../components/Count/Count'
+import { useAuth } from '../../AuthContext'
 
 export default function Shop() {
     const [onLike, setOnLike] = useState(false)
     const [activeSection, setActiveSection] = useState('desc');
-    const [hover, setHover] = useState(null);
+    const { handleQuantityChange, handleAddToCart } = useAuth()
 
     const handleSectionChange = (section) => {
         setActiveSection(section);
@@ -30,7 +34,10 @@ export default function Shop() {
     const handleOnLike = () => {
         setOnLike(!onLike)
     }
-
+    const location = useLocation();
+    const { id } = useParams();
+    const item = location.state?.item;
+    const [quantity, setQuantity] = useState(item?.quantity || 1);
 
     return (
 
@@ -44,33 +51,33 @@ export default function Shop() {
                             <div className={styles.shop_item_content}>
                                 <div className={styles.shop_item_content_species}>
                                     <div className={styles.shop_item_content_species_img}>
-                                        <img src="/assets/plants/img1.png" alt="" />
+                                        <img src={item?.image} alt="" />
                                     </div>
                                     <div className={styles.shop_item_content_species_img}>
-                                        <img src="/assets/plants/img1.png" alt="" />
+                                        <img src={item?.image} alt="" />
                                     </div>
                                     <div className={styles.shop_item_content_species_img}>
-                                        <img src="/assets/plants/img1.png" alt="" />
+                                        <img src={item?.image} alt="" />
                                     </div>
                                     <div className={styles.shop_item_content_species_img}>
-                                        <img src="/assets/plants/img1.png" alt="" />
+                                        <img src={item?.image} alt="" />
                                     </div>
                                 </div>
                                 <div className={styles.shop_item_content_block}>
                                     <div className={styles.shop_item_content_block_icon}>
                                         <Search />
                                     </div>
-                                    <img src="/assets/plants/img6.png" alt="" />
+                                    <img src={item?.image} alt="" />
                                 </div>
                             </div>
                             <div className={styles.shop_item_infor}>
                                 <div className={styles.shop_item_infor_title}>
                                     <h2>
-                                        Barberton Daisy
+                                        {item?.name}
                                     </h2>
                                     <div className={styles.shop_item_infor_title_price}>
                                         <p>
-                                            $119.00
+                                            {item?.price}
                                         </p>
                                         <div className={styles.review}>
                                             <Star />
@@ -82,31 +89,34 @@ export default function Shop() {
                                         Short Description:
                                     </h4>
                                     <p>
-                                        The ceramic cylinder planters come with a wooden stand to help elevate your plants off <br />
-                                        the ground. The ceramic cylinder planters come with a wooden stand to help elevate <br />
-                                        your plants off the ground.
+
+                                        {item?.description}
                                     </p>
                                 </div>
 
-                                
+                     
 
                                 <div className={styles.shop_item_infor_cart}>
-                                    <div className={styles.count}>
-                                        <Count />
+                                    <div className={styles.shop_item_infor_cart_count}>
+                                        <Count
+                                            itemId={item.id}
+                                            initialQuantity={item.quantity || 1}
+                                            onQuantityChange={(newQuantity) => {
+                                                setQuantity(newQuantity);
+                                                handleQuantityChange(item.id, newQuantity);
+                                            }}
+                                        />
                                     </div>
                                     <div className={styles.shop_item_infor_cart_buy}>
-                                        <Link to='/check'>
-                                            <button>
-                                                buy now
-                                            </button>
-                                        </Link>
+                                        <button>
+                                            buy now
+                                        </button>
                                     </div>
                                     <div className={styles.shop_item_infor_cart_add}>
-                                        <Link to='/cart'>
-                                            <button>
-                                                add to cart
-                                            </button>
-                                        </Link>
+                                        <button onClick={() => handleAddToCart({...item, quantity})}>
+                                            add to cart
+                                        </button>
+
                                     </div>
                                     <div className={styles.shop_item_infor_cart_like}>
                                         <button onClick={handleOnLike}>
@@ -192,39 +202,7 @@ export default function Shop() {
                             <div className={styles.description_item_title}>
                                 {activeSection === 'desc' && (
                                     <div>
-                                        <p>
-                                            The ceramic cylinder planters come with a wooden stand to help elevate your plants off the ground.
-                                            The ceramic cylinder planters come with a wooden stand to help elevate your plants off the ground.
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor.
-                                            Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus
-                                            mi, vulputate adipiscing cursus eu, suscipit id nulla.
-                                        </p>
-                                        <p>
-                                            Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem, quis fermentum turpis eros
-                                            eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate,
-                                            sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis
-                                            mi. Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula
-                                            euismod eget. The ceramic cylinder planters come with a wooden stand to help elevate your plants off the ground.
-                                        </p>
-                                        <h4>Living Room:</h4>
-                                        <p>
-                                            The ceramic cylinder planters come with a wooden stand to help elevate your plants off the ground. The ceramic
-                                            cylinder planters come with a wooden stand to help elevate your plants off the ground. Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit.
-                                        </p>
-                                        <h4>Dining Room:</h4>
-                                        <p>
-                                            The benefits of houseplants are endless. In addition to cleaning the air of harmful toxins, they can help to improve your
-                                            mood, reduce stress and provide you with better sleep. Fill every room of your home with houseplants and their restorative
-                                            qualities will improve your life.
-                                        </p>
-                                        <h4>Office:</h4>
-                                        <p>
-                                            The ceramic cylinder planters come with a wooden stand to help elevate your plants off the ground. The ceramic cylinder
-                                            planters come with a wooden stand to help elevate your plants off the ground. Lorem ipsum dolor sit amet, consectetur
-                                            adipiscing elit.
-                                        </p>
+                                        <p>{item?.description}</p>
                                     </div>
                                 )}
                                 {activeSection === 'reviews' && (
