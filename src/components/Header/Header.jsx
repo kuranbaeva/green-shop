@@ -7,7 +7,6 @@ import { Search, ShoppingCart, User } from 'lucide-react';
 import { useAuth } from '../../AuthContext';
 import Header_Login from '../header_login';
 
-
 export default function Header() {
   const [hover, setHover] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -115,12 +114,12 @@ export default function Header() {
             <div className={`header_item_navigation_login ${isLoginOpen ? 'open' : ''}`}>
               {isAuthenticated ? (
                 <div onClick={() => navigate('/profile')} className='avatar'>
-                  {avatar && avatar !== 'null' ? (
-                    <img src={avatar} alt="Avatar" className={styles.avatar} />
-                  ) : (
-                    <User />
-                  )}
-                </div>
+                {avatar && avatar !== 'null' ? ( 
+                  <img src={avatar} alt="Avatar" className={styles.avatar} />
+                ) : (
+                  <User />
+                )}
+              </div>
               ) : (
                 <Button onClick={toggleLoginModal}>
                   <img src="/assets/img/exit.png" alt="" />

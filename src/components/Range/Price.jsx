@@ -6,7 +6,6 @@ const MAX = 2000;
 
 export default function Price() {
     const [values, setValues] = useState([MIN, MAX])
-    console.log(values);
 
     return (
         <>

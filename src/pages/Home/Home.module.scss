@@ -17,6 +17,9 @@
     }
 }
 
-.footer{
-    margin-top: 90px;
+.footer {
+    &_item {
+        margin-top: 100px;
+    }
 }
+

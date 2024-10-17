@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
 export default function Card({ items }) {
-    // const [items, setItems] = useState([]);
     const [favItems, setFavItems] = useState([]);
-
-    const { cartItems, handleAddToCart } = useAuth()
-    console.log(cartItems);
+    const { cartItems,
+         handleAddToCart,
+         favoriteItems,
+         handleAddToFavorite,
+         handleCartClick,
+         isItemInCart,
+         isItemInFavorite,
+         handleFavClick} = useAuth()
 
     const navigate = useNavigate();
     // useEffect(() => {
@@ -22,31 +26,8 @@ export default function Card({ items }) {
     //         })
     // }, []);
 
-    const handleFavClick = (id) => {
-        if (favItems.includes(id)) {
-            setFavItems(favItems.filter(itemId => itemId !== id));
-        } else {
-            setFavItems([...favItems, id]);
-        }
-    };
-
-
-
-
     const handleOpenItem = (item) => {
         navigate(`/shop/${item.id}`, { state: { item } });
-    };
-    const isItemInCart = (id) => {
-        return cartItems.some(cartItem => cartItem.id === id);
-    };
-
-    const handleCartClick = (item) => {
-        if (isItemInCart(item.id)) {
-            const updatedCartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
-            handleAddToCart(updatedCartItems);
-        } else {
-            handleAddToCart(item);
-        }
     };
 
 
@@ -74,6 +55,14 @@ export default function Card({ items }) {
                                     {favItems.includes(item.id)
                                         ? <img src="/assets/img/fullHeart.png" alt="" />
                                         : <img src="/assets/img/heart.png" alt="" />
+                                    }
+                                </button> */}
+                                   <button
+                                    onClick={() => handleFavClick(item)}
+                                >
+                                    {isItemInFavorite(item.id)
+                                      ? <img src="/assets/img/fullHeart.png" alt="" />
+                                      : <img src="/assets/img/heart.png" alt="" />
                                     }
                                 </button>
                             </div>
