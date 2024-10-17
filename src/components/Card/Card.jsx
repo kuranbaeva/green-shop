@@ -7,13 +7,13 @@ import { useAuth } from '../../AuthContext';
 export default function Card({ items }) {
     const [favItems, setFavItems] = useState([]);
     const { cartItems,
-         handleAddToCart,
-         favoriteItems,
-         handleAddToFavorite,
-         handleCartClick,
-         isItemInCart,
-         isItemInFavorite,
-         handleFavClick} = useAuth()
+        handleAddToCart,
+        favoriteItems,
+        handleAddToFavorite,
+        handleCartClick,
+        isItemInCart,
+        isItemInFavorite,
+        handleFavClick } = useAuth()
 
     const navigate = useNavigate();
     // useEffect(() => {
@@ -38,7 +38,8 @@ export default function Card({ items }) {
                 <div key={item.id} className={styles.card}>
                     <div className={styles.card_img}>
                         <div onClick={() => handleOpenItem(item)} className={styles.card_img_image}>
-                            <img src={item.image} alt={item.name} /></div>
+                            <img src={item.image} alt={item.name} />
+                        </div>
                         <div className={`${styles.cart} ${styles.block}`}>
                             <div className={styles.btn}>
                                 <button
@@ -56,13 +57,13 @@ export default function Card({ items }) {
                                         ? <img src="/assets/img/fullHeart.png" alt="" />
                                         : <img src="/assets/img/heart.png" alt="" />
                                     }
-                                </button> */}
-                                   <button
+                                </button> 
+                                <button
                                     onClick={() => handleFavClick(item)}
                                 >
                                     {isItemInFavorite(item.id)
-                                      ? <img src="/assets/img/fullHeart.png" alt="" />
-                                      : <img src="/assets/img/heart.png" alt="" />
+                                        ? <img src="/assets/img/fullHeart.png" alt="" />
+                                        : <img src="/assets/img/heart.png" alt="" />
                                     }
                                 </button>
                             </div>

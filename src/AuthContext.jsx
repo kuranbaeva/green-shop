@@ -1,9 +1,9 @@
-import React, { createContext, useContext, useState,useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [totalPrice, setTotalPrice]= useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [cartItems, setCartItems] = useState(() => {
@@ -14,57 +14,57 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]);
 
-const [favoriteItems,setFavoriteItems]=useState(()=>{
-    const getFavorite=localStorage.getItem('favoriteItems');
-    return getFavorite? JSON.parse(getFavorite):[]
+    const [favoriteItems, setFavoriteItems] = useState(() => {
+        const getFavorite = localStorage.getItem('favoriteItems');
+        return getFavorite ? JSON.parse(getFavorite) : []
 
-})
-useEffect(() => {
-    localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
-}, [favoriteItems]);
+    })
+    useEffect(() => {
+        localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
+    }, [favoriteItems]);
 
 
-const handleAddToFavorite = (item) => {
-    if (Array.isArray(item)) {
-        setFavoriteItems(item);
-    } else {
-        const findItem = favoriteItems.find(favoriteItem => favoriteItem.id === item.id);
-        const updatedFavoriteItems = findItem
-            ? favoriteItems.map(favoriteItem => 
-                favoriteItem.id === item.id 
-                ? { ...favoriteItem} 
-                : favoriteItem
-            )
-            : [...favoriteItems, { ...item }];
+    const handleAddToFavorite = (item) => {
+        if (Array.isArray(item)) {
+            setFavoriteItems(item);
+        } else {
+            const findItem = favoriteItems.find(favoriteItem => favoriteItem.id === item.id);
+            const updatedFavoriteItems = findItem
+                ? favoriteItems.map(favoriteItem =>
+                    favoriteItem.id === item.id
+                        ? { ...favoriteItem }
+                        : favoriteItem
+                )
+                : [...favoriteItems, { ...item }];
 
-        setFavoriteItems(updatedFavoriteItems);
-    }
-};
+            setFavoriteItems(updatedFavoriteItems);
+        }
+    };
     const handleAddToCart = (item) => {
         if (Array.isArray(item)) {
             setCartItems(item);
         } else {
             const findItem = cartItems.find(cartItem => cartItem.id === item.id);
             const updatedCartItems = findItem
-                ? cartItems.map(cartItem => 
-                    cartItem.id === item.id 
-                    ? { ...cartItem, quantity: cartItem.quantity} 
-                    : cartItem
+                ? cartItems.map(cartItem =>
+                    cartItem.id === item.id
+                        ? { ...cartItem, quantity: cartItem.quantity }
+                        : cartItem
                 )
                 : [...cartItems, { ...item }];
-    
+
             setCartItems(updatedCartItems);
         }
     };
-    
-    
+
+
     const handleQuantityChange = (id, newQuantity) => {
-        const updatedCartItems = cartItems.map(item => 
+        const updatedCartItems = cartItems.map(item =>
             item.id === id ? { ...item, quantity: newQuantity } : item
         );
         setCartItems(updatedCartItems);
     };
-    
+
     const isItemInCart = (id) => {
         return cartItems.some(cartItem => cartItem.id === id);
     };
@@ -79,7 +79,7 @@ const handleAddToFavorite = (item) => {
     };
 
 
-const isItemInFavorite = (id) => {
+    const isItemInFavorite = (id) => {
         return favoriteItems.some(cartItem => cartItem.id === id);
     };
 
@@ -98,7 +98,7 @@ const isItemInFavorite = (id) => {
         }
     };
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated,cartItems,setCartItems,handleAddToCart,handleQuantityChange,totalPrice,setTotalPrice}}>
+        <AuthContext.Provider value={{ isAuthenticated,isItemInCart,isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice }}>
             {children}
         </AuthContext.Provider>
     );
