@@ -1,14 +1,90 @@
-import React from 'react'
-import Header from '../../components/Header/Header'
-import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
-import styles from '../../pages/Checkout/Checkout.module.scss'
-import { useCart } from '../../CartContext'
-import { Link } from 'react-router-dom'
-import Button from '../../components/UI/Button/Button'
-import Footer from '../../components/Footer/Footer'
+import React, { useEffect, useState } from 'react';
+import Header from '../../components/Header/Header';
+import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
+import styles from '../../pages/Checkout/Checkout.module.scss';
+import Button from '../../components/UI/Button/Button';
+import Footer from '../../components/Footer/Footer';
+import { useAuth } from '../../AuthContext';
+import axios from '../../axios/index';
 
 export default function Checkout() {
-    const { cartSummary } = useCart();
+    const { cartItems, setCartItems, totalPrice, setTotalPrice } = useAuth();
+    const [formData, setFormData] = useState({
+        name: '',
+        countryCode: '+996',
+        phone: '',
+        address: '',
+        email: '',
+        home: '',
+        items: []
+    });
+
+    useEffect(() => {
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setCartItems(storedCartItems);
+    }, [setCartItems]);
+
+    useEffect(() => {
+        const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        setTotalPrice(total);
+
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            items: cartItems.map(item => ({
+                products: item.id,
+                quantity: item.quantity,
+                name: item.name,
+                count: item.quantity,
+                price: item.price
+            }))
+        }));
+    }, [cartItems, setTotalPrice]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const fullPhoneNumber = formData.countryCode + formData.phone;
+        const orderData = {
+            ...formData,
+            phone: fullPhoneNumber,
+            items: cartItems.map(item => ({
+                product: item.id,
+                quantity: item.quantity,
+            })),
+            totalPrice
+        };
+
+        axios.post('orders/', orderData)
+            .then(res => {
+                console.log('успешно!', res.data);
+                setCartItems([]);
+                localStorage.removeItem('cartItems');
+
+                setFormData({
+                    name: '',
+                    countryCode: '+996',
+                    phone: '',
+                    address: '',
+                    email: '',
+                    home: '',
+                    items: []
+                });
+                setTotalPrice(0);
+            })
+            .catch(err => {
+                console.log('ошибка при отправлении данных', err);
+            });
+    };
+
+
 
     return (
         <>
@@ -20,69 +96,60 @@ export default function Checkout() {
                         <div className={styles.address_item}>
                             <div className={styles.address_item_form}>
                                 <div className={styles.address_item_form_title}>
-                                    <h2>
-                                        Billing Address
-                                    </h2>
+                                    <h2>Billing Address</h2>
                                 </div>
+
                                 <div className={styles.address_item_form_forms}>
-                                    <form action="">
+                                    <form onSubmit={handleSubmit}>
                                         <div className={styles.address_item_form_forms_one}>
-                                            <label htmlFor="">
-                                                <p>
-                                                    First Name
-                                                </p>
-                                                <input type="text" />
+                                            <label htmlFor="name">
+                                                <p>Name</p>
+                                                <input
+                                                    type="text"
+                                                    id='name'
+                                                    name='name'
+                                                    value={formData.name}
+                                                    onChange={handleChange}
+                                                />
                                             </label>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Country / Region
-                                                </p>
-                                                <input type="text" />
+                                            <label htmlFor="address">
+                                                <p>Address</p>
+                                                <input
+                                                    type="text"
+                                                    id='address'
+                                                    name='address'
+                                                    value={formData.address}
+                                                    onChange={handleChange}
+                                                />
                                             </label>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Street Address
-                                                </p>
-                                                <input type="text" />
-                                            </label>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Email address
-                                                </p>
-                                                <input type="email" />
-                                            </label>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Order notes (optional)
-                                                </p>
-                                                <textarea name="" id="" cols="30" rows="20"></textarea>
+                                            <label htmlFor="home">
+                                                <p>Home</p>
+                                                <input
+                                                    type="text"
+                                                    id='home'
+                                                    name='home'
+                                                    value={formData.home}
+                                                    onChange={handleChange}
+                                                />
                                             </label>
                                         </div>
 
                                         <div className={styles.address_item_form_forms_two}>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Last Name
-                                                </p>
-                                                <input type="text" />
-                                            </label>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Town / City
-                                                </p>
-                                                <input type="text" />
-                                            </label>
-                                            <label htmlFor="">
-                                                <p>
-                                                    Zip
-                                                </p>
-                                                <input type="text" />
+                                            <label htmlFor="email">
+                                                <p>Email Address</p>
+                                                <input
+                                                    type="email"
+                                                    id='email'
+                                                    name='email'
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                />
                                             </label>
 
                                             <label className={styles.phone}>
                                                 <p>Phone Number</p>
                                                 <div className={styles.num}>
-                                                    <select >
+                                                    <select name="countryCode" onChange={handleChange}>
                                                         <option value="+996">+996</option>
                                                         <option value="+997">+997</option>
                                                         <option value="+998">+998</option>
@@ -91,11 +158,17 @@ export default function Checkout() {
                                                     <input
                                                         name="phone"
                                                         type="tel"
+                                                        value={formData.phone}
+                                                        onChange={handleChange}
                                                     />
                                                 </div>
-
                                             </label>
+                                        </div>
 
+                                        <div className={styles.btns}>
+                                            <Button type="submit">
+                                                Pleace Order
+                                            </Button>
                                         </div>
                                     </form>
                                 </div>
@@ -103,82 +176,42 @@ export default function Checkout() {
 
                             <div className={styles.address_item_order}>
                                 <div className={styles.address_item_order_title}>
-                                    <h3>
-                                        Your Order
-                                    </h3>
+                                    <h3>Your Order</h3>
                                 </div>
                                 <div className={styles.address_item_order_product}>
-                                    <h4>
-                                        Products
-                                    </h4>
-                                    <p>
-                                        Subtotal
-                                    </p>
+                                    <h4>Products</h4>
+                                    <p>Subtotal</p>
                                 </div>
-                                <div className={styles.address_item_order_total}>
-                                    <div className={styles.card}>
-                                        <div className={styles.product}>
-                                            <img src="/assets/plants/img1.png" alt="" />
-                                            <div>
-                                                <h5>
-                                                    Barberton Daisy
-                                                </h5>
-                                                <p>
-                                                    <span>
-                                                        SKU:
-                                                    </span>
-                                                    1995751877966
-                                                </p>
+                                <div className={styles.address_item_order_scroll}>
+                                    {cartItems.map((item) => (
+                                        <div key={item.id} className={styles.address_item_order_scroll_total}>
+                                            <div className={styles.card}>
+                                                <div className={styles.product}>
+                                                    <img src="/assets/plants/img1.png" alt="" />
+                                                    <div>
+                                                        <h5>{item.name}</h5>
+                                                    </div>
+                                                </div>
+                                                <div className={styles.count}>
+                                                    <p>(x {item.quantity})</p>
+                                                </div>
+                                                <div className={styles.price}>
+                                                    <p>{item.price}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className={styles.count}>
-                                            <p>
-                                                (x 2)
-                                            </p>
-                                        </div>
-                                        <div className={styles.price}>
-                                            <p>
-                                                $238.00
-                                            </p>
-                                        </div>
-                                    </div>
+                                    ))}
                                 </div>
-
 
                                 <div className={styles.address_item_order_subtotal}>
                                     <div className={styles.address_item_order_subtotal_elem}>
-
                                         <div className={styles.address_item_order_subtotal_elem_title}>
-                                            <h3>
-                                                Subtotal
-                                            </h3>
-                                            <p>
-                                                ${cartSummary.subtotal.toFixed(2)}
-                                            </p>
-                                        </div>
-                                        <div className={styles.address_item_order_subtotal_elem_title}>
-                                            <h3>
-                                                Coupon Discount
-                                            </h3>
-                                            <p>
-                                                (-) ${cartSummary.coupon.toFixed(2)}
-                                            </p>
-                                        </div>
-                                        <div className={styles.address_item_order_subtotal_elem_title}>
-                                            <h3>
-                                                Shiping
-                                            </h3>
-                                            <p>
-                                                ${cartSummary.shipping.toFixed(2)}
-                                            </p>
+                                            <h3>Subtotal</h3>
+                                            <p>${totalPrice.toFixed(2)}</p>
                                         </div>
                                         <div className={styles.address_item_order_subtotal_elem_titles}>
-                                            <h2>
-                                                Total
-                                            </h2>
-                                            <p>
-                                                ${cartSummary.total.toFixed(2)}
-                                            </p>
+                                            <h2>Total</h2>
+                                            <p>${totalPrice.toFixed(2)}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -186,47 +219,35 @@ export default function Checkout() {
                                 <div className={styles.address_item_order_pay}>
                                     <div className={styles.address_item_order_pay_elem}>
                                         <div className={styles.address_item_order_pay_elem_title}>
-                                            <h2>
-                                                Payment Method
-                                            </h2>
+                                            <h2>Payment Method</h2>
                                         </div>
                                         <div className={styles.address_item_order_pay_elem_method}>
                                             <div className={styles.address_item_order_pay_elem_method_met}>
-                                                <label htmlFor="id1" >
-
-                                                    <input type="radio" id='id1' />/
-                                                    <img src="/assets/img/cards.png" alt="" />
+                                                <label htmlFor="id1">
+                                                    <input type="radio" id="id1" className={styles.checkbox} name='check1' />
+                                                    <div className={styles.cont}>
+                                                        <img src="/assets/img/cards.png" alt="Кредитная карта" />
+                                                    </div>
                                                 </label>
                                             </div>
                                             <div className={styles.address_item_order_pay_elem_method_met}>
                                                 <label htmlFor="id2">
-
-                                                    <input type="radio" id='id2' />
-                                                    <p>
-                                                        Dorect bank transfer
-                                                    </p>
+                                                    <input type="radio" id="id2" className={styles.checkbox} name='check1' />
+                                                    <div className={styles.cont}>
+                                                        <p>Dorect bank transfer</p>
+                                                    </div>
                                                 </label>
-
                                             </div>
                                             <div className={styles.address_item_order_pay_elem_method_met}>
                                                 <label htmlFor="id3">
-                                                    <input type="radio" id='id3' />
-                                                    <p>
-                                                        Cash on delivery
-                                                    </p>
+                                                    <input type="radio" id="id3" className={styles.checkbox} name='check1' />
+                                                    <div className={styles.cont}>
+                                                        <p>Cash on delivery</p>
+                                                    </div>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-
-                                <div className={styles.btns}>
-                                    <Link to='/check'>
-                                        <Button>
-                                            Please Order
-                                        </Button>
-                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -235,12 +256,11 @@ export default function Checkout() {
 
                 <section className={styles.footer}>
                     <div className="container">
-                        <div className={styles.footer_item}>
-                            <Footer />
-                        </div>
+                        <Footer />
                     </div>
                 </section>
             </div>
         </>
-    )
+    );
 }
+

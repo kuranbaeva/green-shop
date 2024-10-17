@@ -48,8 +48,6 @@ export default function Register({closeModal, onLoginSuccess}) {
             });
     };
 
-
-
     const handleShowPassword = () => {
         setShowPassword(true);
         setTimeout(() => {

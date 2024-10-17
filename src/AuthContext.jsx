@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState,useEffect } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalPrice, setTotalPrice]= useState(0);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [cartItems, setCartItems] = useState(() => {
@@ -40,8 +40,6 @@ const handleAddToFavorite = (item) => {
         setFavoriteItems(updatedFavoriteItems);
     }
 };
-
-
     const handleAddToCart = (item) => {
         if (Array.isArray(item)) {
             setCartItems(item);
@@ -100,7 +98,7 @@ const isItemInFavorite = (id) => {
         }
     };
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated,cartItems,setCartItems,handleAddToCart,handleQuantityChange,handleAddToFavorite,setFavoriteItems,favoriteItems,totalPrice,setTotalPrice,isItemInFavorite,isItemInCart,handleFavClick,handleCartClick}}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated,cartItems,setCartItems,handleAddToCart,handleQuantityChange,totalPrice,setTotalPrice}}>
             {children}
         </AuthContext.Provider>
     );

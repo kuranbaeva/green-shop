@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import styles from '../../components/Card/Card.module.scss';
 import axios from '../../axios/index';
@@ -7,9 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
 export default function Card({ items }) {
-    // const [items, setItems] = useState([]);
     const [favItems, setFavItems] = useState([]);
-
     const { cartItems,
          handleAddToCart,
          favoriteItems,
@@ -33,39 +29,8 @@ export default function Card({ items }) {
     const handleOpenItem = (item) => {
         navigate(`/shop/${item.id}`, { state: { item } });
     };
-//     const isItemInCart = (id) => {
-//         return cartItems.some(cartItem => cartItem.id === id);
-//     };
-
-//     const handleCartClick = (item) => {
-//         if (isItemInCart(item.id)) {
-//             const updatedCartItems = cartItems.filter(cartItem => cartItem.id !== item.id);
-//             handleAddToCart(updatedCartItems);
-//         } else {
-//             handleAddToCart(item);
-//         }
-//     };
 
 
-// const isItemInFavorite = (id) => {
-//         return favoriteItems.some(cartItem => cartItem.id === id);
-//     };
-
-
-//     const handleFavClick = (item) => {
-//         // if (favItems.includes(id)) {
-//         //     setFavItems(favItems.filter(itemId => itemId !== id));
-//         // } else {
-//         //     setFavItems([...favItems, id]);
-//         // }
-//         if (isItemInFavorite(item.id)) {
-//             const updatedFavoriteItems = favoriteItems.filter(favoriteItem => favoriteItem.id !== item.id);
-//             handleAddToFavorite(updatedFavoriteItems);
-//         } else {
-//             handleAddToFavorite(item);
-//         }
-//     };
-    
 
     return (
         <>
@@ -86,7 +51,7 @@ export default function Card({ items }) {
                                 </button>
                             </div>
                             <div className={styles.btn}>
-                                {/* <button onClick={() => handleFavClick(item.id)}>
+                                <button onClick={() => handleFavClick(item.id)}>
                                     {favItems.includes(item.id)
                                         ? <img src="/assets/img/fullHeart.png" alt="" />
                                         : <img src="/assets/img/heart.png" alt="" />

@@ -4,7 +4,6 @@ import styles from '../../components/Count/Count.module.scss'
 import Button from '../../components/UI/Button/Button'
 import {Minus, Plus} from 'lucide-react'
 import { useAuth } from '../../AuthContext'
-
  const Count = ({ itemId, initialQuantity, onQuantityChange,stock }) => {
     const [quantity, setQuantity] = useState(initialQuantity || 1);
 

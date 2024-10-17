@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Header from '../../components/Header/Header'
@@ -14,11 +13,12 @@ import SliderCard from '../../components/SliderCard/SliderCard'
 import Count from '../../components/Count/Count'
 import { useAuth } from '../../AuthContext'
 import axios from '../../axios'
+import { Link } from 'react-router-dom'
+
 export default function Shop() {
     const [onLike, setOnLike] = useState(false);
     const [activeSection, setActiveSection] = useState('desc');
     const { handleQuantityChange, handleAddToCart } = useAuth();
-
     const [randomItem, setRandomItem] = useState(null);
     const location = useLocation();
     const { id } = useParams();

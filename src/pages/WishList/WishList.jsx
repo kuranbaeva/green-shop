@@ -5,8 +5,6 @@ import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
 import SideBar from '../../components/sidebar'
 import { useAuth } from '../../AuthContext'
 
-// import WishCard from '../../components/WishCard/WishCard'
-
 export default function WishList() {
     const { favoriteItems,
          setFavoriteItems,
@@ -62,6 +60,7 @@ export default function WishList() {
                                       : <img src="/assets/img/heart.png" alt="" />
                                     }
                                 </button>
+
                             </div>
                         </div>
                     </div>

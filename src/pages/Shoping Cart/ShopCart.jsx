@@ -1,6 +1,4 @@
 
-
-
 import React, { useEffect, useState } from 'react';
 import styles from '../../pages/Shoping Cart/ShopCart.module.scss';
 import Header from '../../components/Header/Header';
@@ -10,9 +8,9 @@ import Count from '../../components/Count/Count';
 import SliderCard from '../../components/SliderCard/SliderCard';
 import Footer from '../../components/Footer/Footer';
 import { useAuth } from '../../AuthContext';
-
 export default function ShopCart() {
     const { cartItems, setCartItems,handleQuantityChange,totalPrice, setTotalPrice } = useAuth();
+
 
     useEffect(() => {
         const savedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -30,13 +28,6 @@ export default function ShopCart() {
         localStorage.setItem('cartItems', JSON.stringify(updatedCart));
     };
 
-    // const handleQuantityChange = (id, newQuantity) => {
-    //     const updatedCartItems = cartItems.map(item => 
-    //         item.id === id ? { ...item, quantity: newQuantity } : item
-    //     );
-    //     setCartItems(updatedCartItems);
-    //     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    // };
     const item = location.state?.item;
 
     const [quantity, setQuantity] = useState(item?.quantity || 1);
@@ -89,7 +80,7 @@ export default function ShopCart() {
                                             </div>
                                             <div className={styles.bin}>
                                                 <div onClick={() => handleRemoveItem(item.id)}>
-                                                    <img src="/assets/img/bin.png" alt="Remove" />
+                                                    <img src="/assets/svg/bin.svg" alt="Remove" />
                                                 </div>
                                             </div>
                                         </div>

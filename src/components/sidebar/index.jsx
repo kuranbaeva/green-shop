@@ -29,11 +29,11 @@ export default function SideBar() {
         <NavLink  to='/address' className={({ isActive }) => (isActive ? 'active' : '')}><MapPinHouse />Address</NavLink>
         <NavLink to='/orders' className={({ isActive }) => (isActive ? 'active' : '')}><ShoppingCart />Orders</NavLink>
         <NavLink  onClick={() => handleOpenItem(item)} to='/wish' className={({ isActive }) => (isActive ? 'active' : '')}><Heart />Wishlist</NavLink>
-
         <button onClick={handleLogout} className='logout'>
           <LogOut />Logout
         </button>
       </div>
     </div></>
+
   )
 }
