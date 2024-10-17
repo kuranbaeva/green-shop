@@ -112,7 +112,7 @@ export default function Header() {
             <div className={`header_item_navigation_login ${isLoginOpen ? 'open' : ''}`}>
               {isAuthenticated ? (
                 <div onClick={() => navigate('/profile')} className='avatar'>
-                {avatar && avatar !== 'null' ? ( // Проверяем на null или строку 'null'
+                {avatar && avatar !== 'null' ? ( 
                   <img src={avatar} alt="Avatar" className={styles.avatar} />
                 ) : (
                   <User />
