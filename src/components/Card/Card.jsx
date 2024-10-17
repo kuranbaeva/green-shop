@@ -5,22 +5,22 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
 export default function Card({ items }) {
-    const [items, setItems] = useState([]);
+    // const [items, setItems] = useState([]);
     const [favItems, setFavItems] = useState([]);
 
     const { cartItems, handleAddToCart } = useAuth()
     console.log(cartItems);
 
     const navigate = useNavigate();
-    useEffect(() => {
-        axios.get('product/')
-            .then(res => {
-                setItems(res.data.results);
-            })
-            .catch(err => {
-                console.log('Ошибка при получении данных', err);
-            })
-    }, []);
+    // useEffect(() => {
+    //     axios.get('product/')
+    //         .then(res => {
+    //             setItems(res.data.results);
+    //         })
+    //         .catch(err => {
+    //             console.log('Ошибка при получении данных', err);
+    //         })
+    // }, []);
 
     const handleFavClick = (id) => {
         if (favItems.includes(id)) {

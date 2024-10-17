@@ -12,7 +12,7 @@
 // export default function ShopCart() {
 //     const {cartItems, setCartItems} = useAuth()
 //     const [totalPrice, setTotalPrice] = useState(0);
-  
+
 //     useEffect(() => {
 //         const savedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
 //         setCartItems(savedCart);
@@ -197,7 +197,7 @@
 
 //         </div>
 //     )
-  
+
 // }
 
 
@@ -211,9 +211,10 @@ import Count from '../../components/Count/Count';
 import SliderCard from '../../components/SliderCard/SliderCard';
 import Footer from '../../components/Footer/Footer';
 import { useAuth } from '../../AuthContext';
+import { Link } from 'react-router-dom'
 
 export default function ShopCart() {
-    const { cartItems, setCartItems,handleQuantityChange } = useAuth();
+    const { cartItems, setCartItems, handleQuantityChange } = useAuth();
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
@@ -271,26 +272,21 @@ export default function ShopCart() {
                                                 <h3>${item.price}</h3>
                                             </div>
                                             <div className={styles.count}>
-                                                {/* <Count 
-                                                    itemId={item.id} 
-                                                    initialQuantity={item.quantity} 
-                                                    onQuantityChange={handleQuantityChange}
-                                                /> */}
-                                                  <Count
-                                            itemId={item.id}
-                                            initialQuantity={item.quantity || 1}
-                                            onQuantityChange={(newQuantity) => {
-                                                setQuantity(newQuantity)
-                                                handleQuantityChange(item.id, newQuantity);
-                                            }}
-                                        />
+                                                <Count
+                                                    itemId={item.id}
+                                                    initialQuantity={item.quantity || 1}
+                                                    onQuantityChange={(newQuantity) => {
+                                                        setQuantity(newQuantity)
+                                                        handleQuantityChange(item.id, newQuantity);
+                                                    }}
+                                                />
                                             </div>
                                             <div className={styles.total}>
                                                 <h3>${(item.price * item.quantity).toFixed(2)}</h3>
                                             </div>
                                             <div className={styles.bin}>
                                                 <div onClick={() => handleRemoveItem(item.id)}>
-                                                    <img src="/assets/img/bin.png" alt="Remove" />
+                                                    <img src="/assets/svg/bin.svg" alt="Remove" />
                                                 </div>
                                             </div>
                                         </div>
@@ -307,16 +303,22 @@ export default function ShopCart() {
                                     <h3>Subtotal</h3>
                                     <p>${totalPrice.toFixed(2)}</p>
                                 </div>
-                               
+
                                 <div className={styles.cart_item_total_elem_titles}>
                                     <h2>Total</h2>
                                     <p>${(totalPrice).toFixed(2)}</p>
                                 </div>
                                 <div className={styles.cart_item_total_elem_btns}>
-                                    <Button>Proceed To Checkout</Button>
+                                    <Link to='/check'>
+                                        <Button>Proceed To Checkout</Button>
+
+                                    </Link>
                                 </div>
                                 <div className={styles.cart_item_total_elem_btn}>
-                                    <button>Continue Shopping</button>
+                                    <Link to='/'>
+                                        <button>Continue Shopping</button>
+
+                                    </Link>
                                 </div>
                             </div>
                         </div>

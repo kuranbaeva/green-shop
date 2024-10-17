@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 import Header from '../../components/Header/Header'
-import { Search, Minus, Plus, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
+import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
 import styles from '../../pages/Shop/Shop.module.scss'
 import Star from '../../components/UI/Star/StarBtn'
-// import Card from '../../components/Card/Card'
 import Footer from '../../components/Footer/Footer'
-import Button from '../../components/UI/Button/Button'
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
-import Slider from 'react-slick'
 import SliderCard from '../../components/SliderCard/SliderCard'
 import Count from '../../components/Count/Count'
 import { useAuth } from '../../AuthContext'
+import { Link } from 'react-router-dom'
 
 export default function Shop() {
     const [onLike, setOnLike] = useState(false)
@@ -34,6 +32,7 @@ export default function Shop() {
     const handleOnLike = () => {
         setOnLike(!onLike)
     }
+
     const location = useLocation();
     const { id } = useParams();
     const item = location.state?.item;
@@ -77,7 +76,7 @@ export default function Shop() {
                                     </h2>
                                     <div className={styles.shop_item_infor_title_price}>
                                         <p>
-                                            {item?.price}
+                                            $ {item?.price}
                                         </p>
                                         <div className={styles.review}>
                                             <Star />
@@ -94,7 +93,7 @@ export default function Shop() {
                                     </p>
                                 </div>
 
-                     
+
 
                                 <div className={styles.shop_item_infor_cart}>
                                     <div className={styles.shop_item_infor_cart_count}>
@@ -108,14 +107,19 @@ export default function Shop() {
                                         />
                                     </div>
                                     <div className={styles.shop_item_infor_cart_buy}>
-                                        <button>
-                                            buy now
-                                        </button>
+                                        <Link to='/check'>
+                                            <button>
+                                                buy now
+                                            </button>
+                                        </Link>
                                     </div>
                                     <div className={styles.shop_item_infor_cart_add}>
-                                        <button onClick={() => handleAddToCart({...item, quantity})}>
+                                        <Link> 
+                                        <button onClick={() => handleAddToCart({ ...item, quantity })}>
                                             add to cart
                                         </button>
+                                        </Link>
+
 
                                     </div>
                                     <div className={styles.shop_item_infor_cart_like}>

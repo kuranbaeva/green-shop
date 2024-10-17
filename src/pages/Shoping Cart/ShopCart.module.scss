@@ -47,16 +47,18 @@
 
             &_elem {
 
+                max-height: 450px;
+                margin-top: 10px;
+                overflow: auto;
+
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+
+                scrollbar-width: none;
+
                 &_cards {
-                    max-height: 450px;
-                    overflow: auto;
-                    margin-top: 10px;
 
-                    &::-webkit-scrollbar {
-                        display: none;
-                    }
-
-                    scrollbar-width: none;
 
                     &_card {
                         display: flex;
@@ -355,15 +357,15 @@
                 }
 
                 h2:nth-child(2) {
-                    flex: 1;
+                    flex: 0.9;
                 }
 
                 h2:nth-child(3) {
-                    flex: 1.2;
+                    flex: 1.1;
                 }
 
                 h2:nth-child(4) {
-                    flex: 1.2;
+                    flex: 1;
                 }
             }
 
@@ -406,6 +408,7 @@
 
                             .title {
                                 width: 130px;
+
                                 h4 {
                                     font-size: 16px;
                                     font-weight: 500;
@@ -484,7 +487,7 @@
                             }
 
                         }
-                       
+
 
                     }
                 }

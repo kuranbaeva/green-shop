@@ -4,8 +4,10 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/UI/Button/Button';
 import styles from '../../components/Header/Header.module.scss';
 import { Search, ShoppingCart, User } from 'lucide-react';
-import   {useAuth}   from '../../AuthContext';
+import { useAuth } from '../../AuthContext';
 import Header_Login from '../header_login';
+
+
 export default function Header() {
   const [hover, setHover] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -31,7 +33,6 @@ export default function Header() {
     localStorage.setItem('isAuthenticated', 'true');
     const userAvatar = localStorage.getItem('userAvatar');
     setAvatar(userAvatar);
-    // navigate('/profile');
   };
 
   useEffect(() => {
@@ -100,8 +101,10 @@ export default function Header() {
           </div>
 
           <div className={styles.header_item_navigation}>
-            <div className={styles.header_item_navigation_search}>
-              <Search />
+            <div className={styles.header_item_navigation_wish}>
+              <Link to='/wish'>
+                <img src="/assets/img/heart.png" alt="" />
+              </Link>
             </div>
             <div className={styles.header_item_navigation_cart}>
               <Link to='/cart'>
@@ -112,12 +115,12 @@ export default function Header() {
             <div className={`header_item_navigation_login ${isLoginOpen ? 'open' : ''}`}>
               {isAuthenticated ? (
                 <div onClick={() => navigate('/profile')} className='avatar'>
-                {avatar && avatar !== 'null' ? ( // Проверяем на null или строку 'null'
-                  <img src={avatar} alt="Avatar" className={styles.avatar} />
-                ) : (
-                  <User />
-                )}
-              </div>
+                  {avatar && avatar !== 'null' ? (
+                    <img src={avatar} alt="Avatar" className={styles.avatar} />
+                  ) : (
+                    <User />
+                  )}
+                </div>
               ) : (
                 <Button onClick={toggleLoginModal}>
                   <img src="/assets/img/exit.png" alt="" />

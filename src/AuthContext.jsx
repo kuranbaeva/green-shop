@@ -3,6 +3,8 @@ import React, { createContext, useContext, useState,useEffect } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    const [totalPrice, setTotalPrice]= useState(0);
+
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [cartItems, setCartItems] = useState(() => {
         const getCartItems = localStorage.getItem('cartItems');
@@ -57,7 +59,7 @@ export const AuthProvider = ({ children }) => {
     
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated,cartItems,setCartItems,handleAddToCart,handleQuantityChange}}>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated,cartItems,setCartItems,handleAddToCart,handleQuantityChange,totalPrice,setTotalPrice}}>
             {children}
         </AuthContext.Provider>
     );
