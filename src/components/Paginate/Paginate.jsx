@@ -30,11 +30,6 @@ export default function Paginate() {
         getItems()
     },  [currenPage, category])
 
-    // const lastItemIndex = currenPage * counterItems
-    // const firstItemIndex = lastItemIndex - counterItems
-    // const currenIndex = items.slice(firstItemIndex, lastItemIndex)
-
-
     const pagination = pageNumber => setCurrenPage(pageNumber)
 
     return (

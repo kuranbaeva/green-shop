@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../components/Card/Card.module.scss';
-import axios from '../../axios/index';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
@@ -39,6 +38,8 @@ export default function Card({ items }) {
                                 </button>
                             </div>
                             <div className={styles.btn}>
+
+
                                 <button
                                     onClick={() => handleFavClick(item)}
                                 >

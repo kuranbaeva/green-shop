@@ -1,6 +1,4 @@
 
-
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../../components/Products/Products.module.scss';
@@ -21,6 +19,8 @@ export default function Products() {
                 .catch(err => console.log('Ошибка при получении товаров по категории', err));
         }
     }, [category]);
+
+
 
     return (
         <>

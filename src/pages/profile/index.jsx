@@ -1,18 +1,20 @@
 
-
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Profile.scss';
 import instance from '../../axios';
 import ChangePassword from '../../components/changePassword';
 import SideBar from '../../components/sidebar';
-import  {useAuth } from '../../AuthContext';
+import { useAuth } from '../../AuthContext';
 import Header from '../../components/Header/Header';
+// import LoadingBar from '../../components/UI/Loading/Loading'
+
 export default function Profile() {
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [error, setError] = useState({});
-    const { setIsAuthenticated } =useAuth();
+    const { setIsAuthenticated } = useAuth();
+    // const [loading, setLoading] = useState(false)
 
     const [profile, setProfile] = useState({
         email: '',
@@ -48,9 +50,9 @@ export default function Profile() {
         })
             .then(response => {
                 setShowModal(true);
-                setTimeout(() => setShowModal(false), 2000);
+                setTimeout(() => setShowModal(false), 2000)
                 setError({});
-                localStorage.setItem('userAvatar',response.data.avatar);
+                localStorage.setItem('userAvatar', response.data.avatar);
                 console.log(response);
                 setProfile({
                     email: '',
@@ -119,7 +121,7 @@ export default function Profile() {
                                     onChange={handleChange}
                                     name='first_name'
                                     value={profile.first_name}
-                                    type="text"  />
+                                    type="text" />
                             </label>
                             <label>
                                 <p>Last Name</p>
@@ -127,15 +129,15 @@ export default function Profile() {
                                     onChange={handleChange}
                                     name='last_name'
                                     value={profile.last_name}
-                                    type="text"  />
+                                    type="text" />
                             </label>
-                    {error.email && <div className="error-message">{error.email[0]}</div>}
+                            {error.email && <div className="error-message">{error.email[0]}</div>}
                             <label>
                                 <p>Email address</p>
                                 <input onChange={handleChange}
                                     name='email'
                                     value={profile.email}
-                                    type="email"  />
+                                    type="email" />
                             </label>
                         </div>
                         {error.phone && <div className="error-message">{error.phone[0]}</div>}
@@ -154,10 +156,10 @@ export default function Profile() {
                                     name="phone"
                                     type="tel"
                                     placeholder="Номер телефона"
-                                    />
+                                />
                             </div>
-                        </label> 
-                    {error.avatar && <div className="error-message">{error.avatar[0]}</div>}
+                        </label>
+                        {error.avatar && <div className="error-message">{error.avatar[0]}</div>}
 
                         <div className="btns">
 
