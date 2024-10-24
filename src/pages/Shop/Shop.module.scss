@@ -177,8 +177,9 @@
                     height: 40px;
                     width: 130px;
                     text-align: center;
-                    padding-top: 5px;
+                    padding-top: 10px;
                     transition: 0.3s ease;
+
                     button{
                         font-size: 16px;
                         font-weight: 800;
@@ -189,20 +190,6 @@
                     }
                  
              
-                    // a {
-                    //     button {
-                    //         font-size: 16px;
-                    //         font-weight: 800;
-                    //         line-height: 20px;
-                    //         text-align: left;
-                    //         color: #FFFFFF;
-                    //         text-align: center;
-                    //         text-transform: uppercase;
-
-                    //     }
-                    // }
-
-
                     &:hover {
                         border: 1px solid #46A358;
                         background: transparent;
@@ -220,19 +207,17 @@
                     height: 40px;
                     width: 130px;
                     text-align: center;
-                    padding-top: 5px;
+                    padding-top: 10px;
                     transition: 0.5s;
 
-                    a {
-                        button {
-                            font-size: 16px;
-                            font-weight: 800;
-                            line-height: 20px;
-                            color: #46A358;
-                            text-transform: uppercase;
-                        }
-
+                    button {
+                        font-size: 16px;
+                        font-weight: 800;
+                        line-height: 20px;
+                        color: #46A358;
+                        text-transform: uppercase;
                     }
+
 
                     &:hover {
                         background-color: #46A358;

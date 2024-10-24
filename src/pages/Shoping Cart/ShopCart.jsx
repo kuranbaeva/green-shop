@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../pages/Shoping Cart/ShopCart.module.scss';
@@ -9,9 +8,13 @@ import Count from '../../components/Count/Count';
 import SliderCard from '../../components/SliderCard/SliderCard';
 import Footer from '../../components/Footer/Footer';
 import { useAuth } from '../../AuthContext';
-export default function ShopCart() {
-    const { cartItems, setCartItems,handleQuantityChange,totalPrice, setTotalPrice } = useAuth();
+import { Link } from 'react-router-dom'
+import LoadingBar from '../../components/UI/Loading/Loading';
 
+
+export default function ShopCart() {
+    const { cartItems, setCartItems, handleQuantityChange, totalPrice, setTotalPrice } = useAuth();
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         const savedCart = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -29,12 +32,20 @@ export default function ShopCart() {
         localStorage.setItem('cartItems', JSON.stringify(updatedCart));
     };
 
-    const item = location.state?.item;
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+    }, []);
 
+
+    const item = location.state?.item;
+    
     const [quantity, setQuantity] = useState(item?.quantity || 1);
 
     return (
         <div>
+            {loading && <LoadingBar />}
             <Header />
             <Breadcrumbs />
             <section className={styles.cart}>
@@ -66,15 +77,15 @@ export default function ShopCart() {
                                                     initialQuantity={item.quantity} 
                                                     onQuantityChange={handleQuantityChange}
                                                 /> */}
-                                                  <Count
-                                            itemId={item.id}
-                                            initialQuantity={item.quantity || 1}
-                                            onQuantityChange={(newQuantity) => {
-                                                setQuantity(newQuantity)
-                                                handleQuantityChange(item.id, newQuantity);
-                                            }}
-                                            stock={item.stock} 
-                                        />
+                                                <Count
+                                                    itemId={item.id}
+                                                    initialQuantity={item.quantity || 1}
+                                                    onQuantityChange={(newQuantity) => {
+                                                        setQuantity(newQuantity)
+                                                        handleQuantityChange(item.id, newQuantity);
+                                                    }}
+                                                    stock={item.stock}
+                                                />
                                             </div>
                                             <div className={styles.total}>
                                                 <h3>${(item.price * item.quantity).toFixed(2)}</h3>
@@ -98,13 +109,18 @@ export default function ShopCart() {
                                     <h3>Subtotal</h3>
                                     <p>${totalPrice.toFixed(2)}</p>
                                 </div>
-                               
+
                                 <div className={styles.cart_item_total_elem_titles}>
                                     <h2>Total</h2>
                                     <p>${(totalPrice).toFixed(2)}</p>
                                 </div>
                                 <div className={styles.cart_item_total_elem_btns}>
-                                    <Link to='/check'><Button>Proceed To Checkout</Button></Link>
+
+                                    <Link to='/check'>
+                                        <Button>Proceed To Checkout</Button>
+
+                                    </Link>
+
                                 </div>
                                 <div className={styles.cart_item_total_elem_btn}>
                                     <button>Continue Shopping</button>
