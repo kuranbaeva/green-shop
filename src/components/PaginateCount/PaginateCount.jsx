@@ -1,3 +1,4 @@
+
 import React from 'react';
 import styles from '../../components/PaginateCount/PaginateCount.module.scss';
 
@@ -12,7 +13,7 @@ export default function PaginateCount({ counterItems, totalCount, pagination, cu
             <ul className={styles.pagination}>
                 {pageNumber.map(number => (
                     <li
-                        className={`${styles.pages_item} ${currentPage === number ? styles.active : ''}`}
+                        className={`${styles.pages_item} ${ currentPage == number ? styles.active : ''}`}
                         key={number}
                     >
                         <button

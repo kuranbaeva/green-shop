@@ -5,38 +5,49 @@ import styles from '../../components/Paginate/Paginate.module.scss'
 import Paginates from '../PaginateCount/PaginateCount'
 
 export default function Paginate() {
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState(null)
     const [currenPage, setCurrenPage] = useState(1)
     const [counterItems] = useState(6)
+    const getItems = async () => {
+        const res = await axios.get('product', {
+            params: {
+                page_size: 6,
+                page: currenPage
+            }
+        })
+            .then(res => {
+                console.log(res.data);
 
+                setItems(res.data)
+            })
+            .catch(err => {
+                console.error('ошибка при получении данных', err);
+            })
+    }
     useEffect(() => {
-        const getItems = async () => {
-            const res = await axios.get('product')
-                .then(res => {
-                    setItems(res.data.results)
-                })
-                .catch(err => {
-                    console.error('ошибка при получении данных', err);
-                })
-        }
         getItems()
-    }, [])
+    }, [currenPage])
 
-    const lastItemIndex = currenPage * counterItems
-    const firstItemIndex = lastItemIndex - counterItems
-    const currenIndex = items.slice(firstItemIndex, lastItemIndex)
+    // const lastItemIndex = currenPage * counterItems
+    // const firstItemIndex = lastItemIndex - counterItems
+    // const currenIndex = items.slice(firstItemIndex, lastItemIndex)
 
 
     const pagination = pageNumber => setCurrenPage(pageNumber)
 
     return (
         <>
-            <div>
+            <div className={styles.main}>
                 <div className={styles.cards}>
-                    <Card items={currenIndex} />
+                    <Card items={items?.results ?? []} />
+
+
+                </div>
+                <div className={styles.paginate}>
                     <Paginates
-                        counterItems={counterItems}
-                        totalCount={items.length}
+                        counterItems={6}
+                        currentPage={currenPage}
+                        totalCount={items?.count}
                         pagination={pagination}
                     />
                 </div>

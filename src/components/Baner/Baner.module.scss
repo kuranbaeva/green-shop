@@ -8,7 +8,7 @@
         justify-content: space-around;
 
         &_infor {
-            width: 557px;
+            max-width: 557px;
             height: 140px;
             margin-top: 80px;
 
@@ -90,7 +90,18 @@
     }
 }
 
-// .slider {
-//     display: flex;
-//     overflow: hidden;
-// }
+@media(max-width:1020px) {
+    .main_page {
+
+        &_item {
+            &_infor {
+                max-width: 450px;
+                width: 100%;
+            }
+
+            &_img {
+                width: 100%;
+            }
+        }
+    }
+}

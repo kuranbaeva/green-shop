@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../../components/ButtonCat/Button.module.scss';
 import axios from '../../axios/index';
 
-export default function Button() {
+export default function Button({ setSelectedCategory, setPriceRange }) {
     const [categories, setCategories] = useState([]);
     const [products, setProducts] = useState([]);
 

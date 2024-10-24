@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../components/Card/Card.module.scss';
-import axios from '../../axios/index';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 
@@ -52,12 +51,12 @@ export default function Card({ items }) {
                                 </button>
                             </div>
                             <div className={styles.btn}>
-                                <button onClick={() => handleFavClick(item.id)}>
+                                {/* <button onClick={() => handleFavClick(item.id)}>
                                     {favItems.includes(item.id)
                                         ? <img src="/assets/img/fullHeart.png" alt="" />
                                         : <img src="/assets/img/heart.png" alt="" />
                                     }
-                                </button> 
+                                </button>  */}
                                 <button
                                     onClick={() => handleFavClick(item)}
                                 >
