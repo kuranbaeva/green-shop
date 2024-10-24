@@ -1,66 +1,34 @@
-import React, { useState } from 'react';
+
+
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../../components/Products/Products.module.scss';
-import { NavLink } from 'react-router-dom';
-import Card from '../Paginate/Paginate';
-
+import Card from '../Paginate/Paginate'; 
+import axios from '../../axios'
 export default function Products() {
-    const [hover, setHover] = useState(null);
+    const { category } = useParams();
+    const [products, setProducts] = useState([]);
 
-    const handleMouseEnter = (path) => {
-        setHover(path);
-    };
-
-    const handleMouseLeave = () => {
-        setHover(null);
-    };
+    useEffect(() => {
+        if (!category) {
+            axios.get('products/')
+                .then(res => setProducts(res.data.results))
+                .catch(err => console.log('Ошибка при получении товаров', err));
+        } else {
+            axios.get(`products/?category=${category}`)
+                .then(res => setProducts(res.data.results))
+                .catch(err => console.log('Ошибка при получении товаров по категории', err));
+        }
+    }, [category]);
 
     return (
         <>
-            <div>
-                <div className={styles.plants_item_content}>
-                    <div className={styles.plants_item_content_nav}>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <NavLink
-                                        to="/all-plants"
-                                        className={({ isActive }) => (isActive ? styles.active : '')}
-                                        onMouseEnter={() => handleMouseEnter('/all-plants')}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        All Plants
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to="/new-arrivals"
-                                        className={({ isActive }) => (isActive ? styles.active : '')}
-                                        onMouseEnter={() => handleMouseEnter('/new-arrivals')}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        New Arrivals
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink
-                                        to="/sale"
-                                        className={({ isActive }) => (isActive ? styles.active : '')}
-                                        onMouseEnter={() => handleMouseEnter('/sale')}
-                                        onMouseLeave={handleMouseLeave}
-                                    >
-                                        Sale
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
-                    <div className={styles.plants_item_content_card}>
-                        <Card />
-                    </div>
+            <div className={styles.plants_item_content}>
+                <div className={styles.plants_item_content_card}>
+                    <Card products={products} />
                 </div>
             </div>
         </>
     );
 }
-

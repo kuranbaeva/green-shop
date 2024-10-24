@@ -1,8 +1,22 @@
 .cards {
     display: grid;
+    flex: 1 0 100%;
+    align-items: flex-start;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
     margin-top: 20px;
     max-width: 840px;
     width: 100%;
+    position: relative;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-direction: column;
+}
+.paginate{
+    // position: absolute;
+  
 }

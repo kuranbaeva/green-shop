@@ -3,7 +3,7 @@ import styles from '../../components/Categories/Categories.module.scss'
 import Renge from '../../components/Range/Price'
 import Button from '../ButtonCat/Button'
 
-export default function Categories() {
+export default function Categories({onCategoryChange} ) {
     return (
         <>
             <div>
@@ -14,7 +14,7 @@ export default function Categories() {
                         </h2>
 
                         <div className={styles.categoria_item_btns}>
-                            <Button />
+                            <Button onCategoryChange={onCategoryChange} />
                         </div>
 
                         <div className={styles.categoria_item_price}>

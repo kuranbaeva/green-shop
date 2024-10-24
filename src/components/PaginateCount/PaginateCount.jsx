@@ -10,9 +10,9 @@ export default function PaginateCount({ counterItems, totalCount, pagination, cu
     return (
         <div className={styles.pag}>
             <ul className={styles.pagination}>
-                {pageNumber.map(number => (
+                {pageNumber.map(number => (  
                     <li
-                        className={`${styles.pages_item} ${currentPage === number ? styles.active : ''}`}
+                        className={`${styles.pages_item} ${ currentPage == number ? styles.active : ''}`}
                         key={number}
                     >
                         <button

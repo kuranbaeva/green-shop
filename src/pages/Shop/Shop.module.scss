@@ -179,19 +179,28 @@
                     text-align: center;
                     padding-top: 5px;
                     transition: 0.3s ease;
-
-                    a {
-                        button {
-                            font-size: 16px;
-                            font-weight: 800;
-                            line-height: 20px;
-                            text-align: left;
-                            color: #FFFFFF;
-                            text-align: center;
-                            text-transform: uppercase;
-
-                        }
+                    button{
+                        font-size: 16px;
+                        font-weight: 800;
+                        color: #FFFFFF;
+                        text-align: center;
+                        text-transform: uppercase;
+               
                     }
+                 
+             
+                    // a {
+                    //     button {
+                    //         font-size: 16px;
+                    //         font-weight: 800;
+                    //         line-height: 20px;
+                    //         text-align: left;
+                    //         color: #FFFFFF;
+                    //         text-align: center;
+                    //         text-transform: uppercase;
+
+                    //     }
+                    // }
 
 
                     &:hover {
