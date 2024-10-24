@@ -14,35 +14,12 @@
 
         }
 
-        &_btns {
-
-            &_btn {
-                display: flex;
-                flex-direction: column;
-                text-align: left;
-                align-items: start;
-                justify-content: start;
-
-                button {
-                    font-size: 15px;
-                    font-weight: 700;
-                    line-height: 40px;
-
-                    &:hover {
-                        color: #46A358;
-                        transition: 0.2s;
-
-                    }
-                }
-
-            }
+        &_price {
+            margin-top: 30px;
 
         }
-    }
 
-    &_price {
-        margin-top: 30px;
-
+     
     }
 
     &_sale {
@@ -50,17 +27,9 @@
         align-items: center;
         justify-content: center;
         margin-top: 30px;
-
         img {
             width: 370px;
             height: 470px;
         }
-    }
-}
-
-
-@media(max-width:1230px) {
-    .categoria {
-        display: none;
     }
 }

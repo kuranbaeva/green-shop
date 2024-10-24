@@ -4,7 +4,6 @@ import styles from '../../components/ButtonCat/Button.module.scss';
 import axios from '../../axios/index';
 import { useNavigate } from 'react-router-dom'; 
 
-
 export default function Button({ onCategoryChange }) {
     const [categories, setCategories] = useState([]);
     const [activeCategoryId, setActiveCategoryId] = useState(null);

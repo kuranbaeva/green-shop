@@ -4,9 +4,8 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [totalPrice, setTotalPrice] = useState(0);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [getItemCount] = useState();
 
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [cartItems, setCartItems] = useState(() => {
         const getCartItems = localStorage.getItem('cartItems');
         return getCartItems ? JSON.parse(getCartItems) : [];
@@ -99,9 +98,7 @@ export const AuthProvider = ({ children }) => {
         }
     };
     return (
-
-        <AuthContext.Provider value={{ isAuthenticated, isItemInCart, isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice, handleCartClick, handleFavClick, favoriteItems, setFavoriteItems, getItemCount }}>
-
+        <AuthContext.Provider value={{ favoriteItems,setFavoriteItems,handleCartClick,handleFavClick,isAuthenticated,isItemInCart,isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice }}>
             {children}
         </AuthContext.Provider>
     );

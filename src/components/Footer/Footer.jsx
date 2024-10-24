@@ -90,12 +90,10 @@ export default function Footer() {
                                 <div className={styles.footer_item_logo_elem_img}>
                                     <img src="/assets/svg/logo.svg" alt="" />
                                 </div>
-
-                                <a href="https://maps.app.goo.gl/jqECbpLZRedEkCoP7" target="_blank" rel="noopener noreferrer">
+                                <p>
                                     <MapPin /> 70 West Buckingham Ave. <br />
                                     Farmingdale, NY 11735
-                                </a>
-
+                                </p>
                                 <p>
                                     <Mail /> contact@greenshop.com
                                 </p>
@@ -200,17 +198,17 @@ export default function Footer() {
                                             </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <a href="https://x.com/?lang=ru" target="_blank" rel="noopener noreferrer">
+                                            <a  href="https://x.com/?lang=ru" target="_blank" rel="noopener noreferrer">
                                                 <Twitter />
                                             </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <a href="https://ru.linkedin.com/" target="_blank" rel="noopener noreferrer">
+                                            <a  href="https://ru.linkedin.com/" target="_blank" rel="noopener noreferrer">
                                                 <Linkedin />
                                             </a>
                                         </div>
                                         <div className={styles.footer_item_account_elem_media_icons_icon}>
-                                            <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
+                                            <a  href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">
                                                 <Youtube />
                                             </a>
                                         </div>
@@ -234,7 +232,7 @@ export default function Footer() {
 
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     )
 }
