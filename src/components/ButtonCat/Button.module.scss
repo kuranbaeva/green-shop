@@ -14,6 +14,10 @@
                 font-size: 15px;
                 font-weight: 700;
                 line-height: 40px;
+                &.active{
+                    color: #46A358;
+                    transition: 0.2s;  
+                }
             }
 
             p {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation, useParams, Link, useNavigate } from 'react-router-dom'
+import { useLocation, useParams,Link ,useNavigate} from 'react-router-dom'
 import Header from '../../components/Header/Header'
 import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
 import styles from '../../pages/Shop/Shop.module.scss'
@@ -14,84 +14,135 @@ import axios from '../../axios'
 import LoadingBar from '../../components/UI/Loading/Loading'
 
 export default function Shop() {
-  const [onLike, setOnLike] = useState(false);
-  const [activeSection, setActiveSection] = useState('desc');
-  const { handleQuantityChange, handleAddToCart } = useAuth();
-  const [randomItem, setRandomItem] = useState(null);
-  const location = useLocation();
-  const { id } = useParams();
-  const item = location.state?.item || randomItem;
-  const [quantity, setQuantity] = useState(item?.quantity || 1);
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    if (!item) {
-      const fetchRandomItem = async () => {
-        try {
-          const response = await axios.get('/product');
-          const randomIndex = Math.floor(Math.random() * response.data.results.length);
-          setRandomItem(response.data.results[randomIndex]);
-        } catch (error) {
-          console.error('Ошибка при загрузке товара:', error);
+    const [onLike, setOnLike] = useState(false);
+    const [activeSection, setActiveSection] = useState('desc');
+    const { handleQuantityChange, handleAddToCart } = useAuth();
+    const [randomItem, setRandomItem] = useState(null);
+    const location = useLocation();
+    const { id } = useParams();
+    const item = location.state?.item || randomItem;
+    const [quantity, setQuantity] = useState(item?.quantity || 1);
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
+        if (!item) {
+            const fetchRandomItem = async () => {
+                try {
+                    const response = await axios.get('/product');
+                    const randomIndex = Math.floor(Math.random() * response.data.results.length);
+                    setRandomItem(response.data.results[randomIndex]);
+                } catch (error) {
+                    console.error('Ошибка при загрузке товара:', error);
+                }
+            };
+            fetchRandomItem();
+        } else {
+            setQuantity(item.quantity); 
         }
-      };
-      fetchRandomItem();
-    } else {
-      setQuantity(item.quantity);
-    }
-  }, [item]);
+    }, [item]);
 
-  const handleSectionChange = (section) => {
-    setActiveSection(section);
-  };
+    const handleSectionChange = (section) => {
+        setActiveSection(section);
+    };
 
-  const handleOnLike = () => {
-    setOnLike(!onLike);
-  };
+    const handleOnLike = () => {
+        setOnLike(!onLike);
+    };
 
-  const handleMouseEnter = (path) => {
-    setHover(path);
-  };
+    const handleMouseEnter = (path) => {
+                setHover(path);
+            };
+        
+            const handleMouseLeave = () => {
+                setHover(null);
+            };
+        
+            if (!item) {
+                return <div>Loading...</div>; 
+            }  
 
-  const handleMouseLeave = () => {
-    setHover(null);
-  };
-
-  if (!item) {
+            const handleBuyNow = () => {
+              navigate('/check', { state: { item } });
+          };
+if (!item) {
     return setTimeout(() => {
       setLoading(false);
     }, 3000);
 
   }
 
+      return (
+        <>
+          <div>
+          {loading && <LoadingBar />}
+            <Header />
+            <Breadcrumbs/>
+            <section className={styles.shop}>
+              <div className="container">
+                <div className={styles.shop_item}>
+                  <div className={styles.shop_item_content}>
+                    <div className={styles.shop_item_content_species}>
+                      {item.image && (
+                       <> 
+                         <div className={styles.shop_item_content_species_img}>
+                          <img src={item.image} alt={item.name} />
+                        </div>
+                        <div className={styles.shop_item_content_species_img}>
+                          <img src={item.image} alt={item.name} />
+                        </div>
+                        <div className={styles.shop_item_content_species_img}>
+                          <img src={item.image} alt={item.name} />
+                        </div>
+                        <div className={styles.shop_item_content_species_img}>
+                          <img src={item.image} alt={item.name} />
+                        </div>
+                       </>
+                      
+                         
 
-  const handleBuyNow = () => {
-    navigate('/check', { state: { item } });
-  };
-
-
-  return (
-    <>
-      <div>
-        {loading && <LoadingBar />}
-        <Header />
-        <Breadcrumbs />
-        <section className={styles.shop}>
-          <div className="container">
-            <div className={styles.shop_item}>
-              <div className={styles.shop_item_content}>
-                <div className={styles.shop_item_content_species}>
-                  {item.image && (
-                    <>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
+                      )}
+                    </div>
+                    <div className={styles.shop_item_content_block}>
+                      <div className={styles.shop_item_content_block_icon}>
+                        <Search />
                       </div>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
+                      <img src={item.image} alt={item.name} />
+                    </div>
+                  </div>
+                  <div className={styles.shop_item_infor}>
+                    <div className={styles.shop_item_infor_title}>
+                      <h2>{item.name}</h2>
+                      <div className={styles.shop_item_infor_title_price}>
+                        <p>{item.price}</p>
+                        <div className={styles.review}>
+                          <Star />
+                        </div>
                       </div>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
+                    </div>
+                    <div className={styles.shop_item_infor_text}>
+                      <h4>Short Description:</h4>
+                      <p>{item.description}</p>
+                    </div>
+
+                    <div className={styles.shop_item_infor_cart}>
+                      <Count
+                        itemId={item.id}
+                        initialQuantity={item.quantity || 1}
+                        onQuantityChange={(newQuantity) => {
+                          setQuantity(newQuantity);
+                          handleQuantityChange(item.id, newQuantity);
+                        }}
+                        stock={item.stock} 
+
+                      />
+                      <div className={styles.shop_item_infor_cart_buy}>
+                      <button onClick={handleBuyNow}>Buy Now</button>
+                      </div>
+                      <div className={styles.shop_item_infor_cart_add}>
+                       <Link><button onClick={() => handleAddToCart({ ...item, quantity })}>
+                          add to cart
+                        </button></Link> 
+
                       </div>
                       <div className={styles.shop_item_content_species_img}>
                         <img src={item.image} alt={item.name} />
@@ -174,6 +225,7 @@ export default function Shop() {
               </div>
             </div>
           </div>
+
         </section>
         <section className={styles.description}>
           <div className='container'>

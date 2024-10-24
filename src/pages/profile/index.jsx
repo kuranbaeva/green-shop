@@ -1,3 +1,4 @@
+
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Profile.scss';
@@ -53,6 +54,13 @@ export default function Profile() {
                 setError({});
                 localStorage.setItem('userAvatar', response.data.avatar);
                 console.log(response);
+                setProfile({
+                    email: '',
+                    first_name: '',
+                    last_name: '',
+                    avatar: null,
+                });
+                setPhoneNumber('');
 
             })
             .catch(error => {

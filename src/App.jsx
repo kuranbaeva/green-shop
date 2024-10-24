@@ -7,12 +7,14 @@ import Profile from './pages/profile';
 import { AuthProvider } from './AuthContext';
 import Checkout from './pages/Checkout/Checkout'
 import WishList from './pages/WishList/WishList'
+import Paginate from './components/Paginate/Paginate';
 
 export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path='/' element={<Home />} />
+      <Route path='/' element={<Home />} />
+        <Route path='/:category?' element={<Home />} />
         <Route path='/shop/:id' element={<Shop />} />
         <Route path='/shop' element={<Shop />} />
         <Route path='/cart' element={<ShopCart />} />

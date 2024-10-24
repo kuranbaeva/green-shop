@@ -1,37 +1,34 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../../components/Products/Products.module.scss';
-import { NavLink } from 'react-router-dom';
-import Card from '../Paginate/Paginate';
+import Card from '../Paginate/Paginate'; 
+import axios from '../../axios'
+export default function Products() {
+    const { category } = useParams();
+    const [products, setProducts] = useState([]);
 
-export default function Products({ selectedCategory, items }) {
-    const [hover, setHover] = useState(null);
-
-    const handleMouseEnter = (path) => {
-        setHover(path);
-    };
-
-    const handleMouseLeave = () => {
-        setHover(null);
-    };
+    useEffect(() => {
+        if (!category) {
+            axios.get('products/')
+                .then(res => setProducts(res.data.results))
+                .catch(err => console.log('Ошибка при получении товаров', err));
+        } else {
+            axios.get(`products/?category=${category}`)
+                .then(res => setProducts(res.data.results))
+                .catch(err => console.log('Ошибка при получении товаров по категории', err));
+        }
+    }, [category]);
 
 
 
     return (
         <>
-            <div>
-                <div className={styles.plants_item_content}>
-                    <div className={styles.plants_item_content_nav}>
-                        <p>
-                            All Plants
-                        </p>
-                    </div>
-
-                    <div className={styles.plants_item_content_card}>
-                        <Card items={items} />
-                    </div>
+            <div className={styles.plants_item_content}>
+                <div className={styles.plants_item_content_card}>
+                    <Card products={products} />
                 </div>
             </div>
         </>
     );
 }
-

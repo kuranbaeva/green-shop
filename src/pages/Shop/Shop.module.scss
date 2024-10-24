@@ -180,17 +180,16 @@
                     padding-top: 10px;
                     transition: 0.3s ease;
 
-                    button {
+                    button{
                         font-size: 16px;
                         font-weight: 800;
-                        line-height: 20px;
-                        text-align: left;
                         color: #FFFFFF;
                         text-align: center;
                         text-transform: uppercase;
-
+               
                     }
-
+                 
+             
                     &:hover {
                         border: 1px solid #46A358;
                         background: transparent;

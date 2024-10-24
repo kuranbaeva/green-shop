@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styles from '../../pages/Shoping Cart/ShopCart.module.scss';
 import Header from '../../components/Header/Header';
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
@@ -114,10 +115,12 @@ export default function ShopCart() {
                                     <p>${(totalPrice).toFixed(2)}</p>
                                 </div>
                                 <div className={styles.cart_item_total_elem_btns}>
+
                                     <Link to='/check'>
                                         <Button>Proceed To Checkout</Button>
 
                                     </Link>
+
                                 </div>
                                 <div className={styles.cart_item_total_elem_btn}>
                                     <button>Continue Shopping</button>

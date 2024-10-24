@@ -99,7 +99,9 @@ export const AuthProvider = ({ children }) => {
         }
     };
     return (
+
         <AuthContext.Provider value={{ isAuthenticated, isItemInCart, isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice, handleCartClick, handleFavClick, favoriteItems, setFavoriteItems, getItemCount }}>
+
             {children}
         </AuthContext.Provider>
     );

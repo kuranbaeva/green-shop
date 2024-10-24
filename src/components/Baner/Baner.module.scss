@@ -4,7 +4,6 @@
 
     &_item {
         display: flex;
-        align-items: start;
         justify-content: space-around;
 
         &_infor {
@@ -90,6 +89,7 @@
     }
 }
 
+
 @media(max-width:1020px) {
     .main_page {
 
@@ -105,3 +105,4 @@
         }
     }
 }
+
