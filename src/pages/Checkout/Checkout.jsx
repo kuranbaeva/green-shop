@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
@@ -7,12 +6,16 @@ import Button from '../../components/UI/Button/Button';
 import Footer from '../../components/Footer/Footer';
 import { useAuth } from '../../AuthContext';
 import axios from '../../axios/index';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
+import LoadingBar from '../../components/UI/Loading/Loading';
+import Modal from '../../components/UI/Modal/Modal'
 
 export default function Checkout() {
     const { cartItems, setCartItems, totalPrice, setTotalPrice } = useAuth();
+    const [loading, setLoading] = useState(true);
     const location = useLocation();
     const itemFromBuyNow = location.state?.item;
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         countryCode: '+996',
@@ -48,7 +51,7 @@ export default function Checkout() {
                 price: item.price
             }))
         }));
-    }, [cartItems, setTotalPrice]);
+    }, [cartItems]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -74,10 +77,9 @@ export default function Checkout() {
 
         axios.post('orders/', orderData)
             .then(res => {
-                console.log('успешно!', res.data);
+                console.log('Order placed successfully!', res.data);
                 setCartItems([]);
                 localStorage.removeItem('cartItems');
-
                 setFormData({
                     name: '',
                     countryCode: '+996',
@@ -88,10 +90,21 @@ export default function Checkout() {
                     items: []
                 });
                 setTotalPrice(0);
+                setIsModalOpen(true); // Open modal on successful submission
             })
             .catch(err => {
-                console.log('ошибка при отправлении данных', err);
+                console.log('Error placing order', err);
             });
+    };
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+    }, []);
+
+    const closeModal = () => {
+        setIsModalOpen(false);
     };
 
 
@@ -99,16 +112,30 @@ export default function Checkout() {
     return (
         <>
             <div>
-                <Header />
-                <Breadcrumbs />      
+                {loading && <LoadingBar />}
+                <div className={styles.header}>
+                    <Header />
+                </div>
+                <div className={styles.breadcrumbs}>
+                    <Breadcrumbs />
+                </div>
                 <section className={styles.address}>
                     <div className="container">
-                        <div className={styles.address_item}>
+                        <div className={`${styles.title} ${styles.title_none}`}>
+                            <div className={styles.exit}>
+                                <Link to='/'>
+                                    <img src="/assets/svg/exit.svg" alt="" />
+                                </Link>
+                            </div>
+                            <h2>
+                                Checkout
+                            </h2>
+                        </div>
+                        <div className={`${styles.address_item} ${styles.address_none}`}>
                             <div className={styles.address_item_form}>
                                 <div className={styles.address_item_form_title}>
                                     <h2>Billing Address</h2>
                                 </div>
-
                                 <div className={styles.address_item_form_forms}>
                                     <form onSubmit={handleSubmit}>
                                         <div className={styles.address_item_form_forms_one}>
@@ -173,13 +200,14 @@ export default function Checkout() {
                                                     />
                                                 </div>
                                             </label>
+
+                                            <div className={styles.btns}>
+                                                <Button type="submit">
+                                                    Pleace Order
+                                                </Button>
+                                            </div>
                                         </div>
 
-                                        <div className={styles.btns}>
-                                            <Button type="submit">
-                                                Pleace Order
-                                            </Button>
-                                        </div>
 
                                     </form>
                                 </div>
@@ -262,8 +290,52 @@ export default function Checkout() {
                                 </div>
                             </div>
                         </div>
+
+                        {/* <div className={styles.address_mini_form}>
+                            <div className={styles.address_mini_form_item}>
+                                <p>
+                                    Shipping to
+                                </p>
+                                <Link to='/'>
+                                    Add Address
+                                </Link>
+                            </div>
+                            <div className={styles.address_mini_form_send}>
+                                <form action="" onSubmit={handleSubmit}>
+                                    <label htmlFor="home">
+                                        <input
+                                            type="radio"
+                                            value="home"
+                                            id='home'
+                                            onChange={handleChange}
+                                            name='home'
+                                            className={styles.checkbox}
+                                        />
+                                        <div className={`${styles.titles} ${styles.cont}`}>
+                                            <h3>
+                                                Home
+                                            </h3>
+                                            <p>
+                                                {FormData.address}
+                                            </p>
+                                        </div>
+                                        <div className={styles.dots}>
+                                            <img src="/assets/img/dots.png" alt="" />
+                                        </div>
+                                    </label>
+                                </form>
+                            </div>
+                        </div> */}
                     </div>
                 </section>
+
+                <Modal isOpen={isModalOpen} onClose={closeModal}>
+                    <h2>Подтверждение заказа</h2>
+                    <p>Ваш заказ успешно оформлен!</p>
+                    <div className={styles.close_btn}>
+                        <button onClick={closeModal}>Закрыть</button>
+                    </div>
+                </Modal>
 
                 <section className={styles.footer}>
                     <div className="container">

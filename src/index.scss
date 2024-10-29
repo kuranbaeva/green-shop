@@ -43,3 +43,11 @@ button {
     background-color: #46A358;
     color: white;
 }
+
+body {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

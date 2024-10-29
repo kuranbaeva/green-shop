@@ -1,44 +1,46 @@
-
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Profile.scss';
 import instance from '../../axios';
 import ChangePassword from '../../components/changePassword';
 import SideBar from '../../components/sidebar';
 import { useAuth } from '../../AuthContext';
+import LoadingBar from '../../components/UI/Loading/Loading';
 import Header from '../../components/Header/Header';
-// import LoadingBar from '../../components/UI/Loading/Loading'
 
 export default function Profile() {
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [error, setError] = useState({});
     const { setIsAuthenticated } = useAuth();
-    // const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true);
 
     const [profile, setProfile] = useState({
-        email: '',
-        first_name: '',
-        last_name: '',
+        email: localStorage.getItem('profileEmail') || '',
+        first_name: localStorage.getItem('profileFirstName') || '',
+        last_name: localStorage.getItem('profileLastName') || '',
         avatar: null,
     });
-    const [countryCode, setCountryCode] = useState('+996');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    
+    const [countryCode, setCountryCode] = useState(localStorage.getItem('countryCode') || '+996');
+    const [phoneNumber, setPhoneNumber] = useState(localStorage.getItem('phoneNumber') || '');
     const navigate = useNavigate();
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const userId = localStorage.getItem('userId');
         const formData = new FormData();
-        const fullPhone = `${countryCode}${phoneNumber}`;
-
+        let fullPhone = null;
+        if (phoneNumber) {
+            fullPhone = `${countryCode}${phoneNumber}`;
+        }
         const updatedProfile = {
             ...profile,
             phone: fullPhone,
         };
 
         Object.entries(updatedProfile).forEach(([key, value]) => {
+            if (!value) return;
             formData.append(key, value);
         });
 
@@ -50,23 +52,15 @@ export default function Profile() {
         })
             .then(response => {
                 setShowModal(true);
-                setTimeout(() => setShowModal(false), 2000)
+                setTimeout(() => setShowModal(false), 2000);
                 setError({});
                 localStorage.setItem('userAvatar', response.data.avatar);
                 console.log(response);
-                setProfile({
-                    email: '',
-                    first_name: '',
-                    last_name: '',
-                    avatar: null,
-                });
                 setPhoneNumber('');
-
             })
             .catch(error => {
                 setError(error.response ? error.response.data : { general: 'Ошибка при обновлении профиля' });
                 console.log(error);
-
             });
     };
 
@@ -78,6 +72,22 @@ export default function Profile() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProfile(prev => ({ ...prev, [name]: value }));
+
+        const storageKey = `profile${name.charAt(0).toUpperCase() + name.slice(1)}`;
+        localStorage.setItem(storageKey, value);
+        console.log(`Сохраняем ${name}:`, value);
+    };
+
+    const handlePhoneNumberChange = (e) => {
+        const value = e.target.value;
+        setPhoneNumber(value);
+        localStorage.setItem('phoneNumber', value);
+    };
+
+    const handleCountryCodeChange = (e) => {
+        const value = e.target.value;
+        setCountryCode(value);
+        localStorage.setItem('countryCode', value);
     };
 
     const handleDelete = () => {
@@ -85,11 +95,8 @@ export default function Profile() {
         instance.delete(`/auth/profile/${userId}`)
             .then(() => {
                 console.log('Account deleted');
-                localStorage.removeItem('userId');
-                localStorage.removeItem('token');
-                localStorage.removeItem('isAuthenticated');
-                localStorage.removeItem('userAvatar')
-                setIsAuthenticated(false)
+                localStorage.clear();
+                setIsAuthenticated(false);
                 navigate('/');
             })
             .catch(err => {
@@ -105,9 +112,17 @@ export default function Profile() {
         setShowConfirmModal(false);
     };
 
-    return (
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
 
+    }, []);
+
+
+    return (
         <>
+            {loading && <LoadingBar />}
             <Header />
             <div className="container">
                 <div className="profile">
@@ -121,7 +136,8 @@ export default function Profile() {
                                     onChange={handleChange}
                                     name='first_name'
                                     value={profile.first_name}
-                                    type="text" />
+                                    type="text"
+                                />
                             </label>
                             <label>
                                 <p>Last Name</p>
@@ -129,29 +145,32 @@ export default function Profile() {
                                     onChange={handleChange}
                                     name='last_name'
                                     value={profile.last_name}
-                                    type="text" />
+                                    type="text"
+                                />
                             </label>
                             {error.email && <div className="error-message">{error.email[0]}</div>}
                             <label>
                                 <p>Email address</p>
-                                <input onChange={handleChange}
+                                <input
+                                    onChange={handleChange}
                                     name='email'
                                     value={profile.email}
-                                    type="email" />
+                                    type="email"
+                                />
                             </label>
                         </div>
                         {error.phone && <div className="error-message">{error.phone[0]}</div>}
                         <label>
                             <p>Phone Number</p>
                             <div className="profile__information__num">
-                                <select value={countryCode} onChange={(e) => setCountryCode(e.target.value)}>
+                                <select value={countryCode} onChange={handleCountryCodeChange}>
                                     <option value="+996">+996</option>
                                     <option value="+997">+997</option>
                                     <option value="+998">+998</option>
                                     <option value="+999">+999</option>
                                 </select>
                                 <input
-                                    onChange={(e) => setPhoneNumber(e.target.value)}
+                                    onChange={handlePhoneNumberChange}
                                     value={phoneNumber}
                                     name="phone"
                                     type="tel"
@@ -162,8 +181,9 @@ export default function Profile() {
                         {error.avatar && <div className="error-message">{error.avatar[0]}</div>}
 
                         <div className="btns">
-
-                            <label htmlFor="file-input" className="file-label"><img src="./photo.svg" alt="" /></label>
+                            <label htmlFor="file-input" className="file-label">
+                                <img width={'fill'} src={profile.avatar ? URL.createObjectURL(profile.avatar) : "./photo.svg"} alt="" />
+                            </label>
                             <input type="file" id="file-input" className="file-input" onChange={handleFileChange} />
                             <div className="profile__information_btn">
                                 <button type="submit">Change</button>
@@ -196,6 +216,5 @@ export default function Profile() {
                 </div>
             </div>
         </>
-
     );
 }

@@ -2,6 +2,7 @@
     display: flex;
     gap: 15px;
     margin-top: 50px;
+
     .form {
         width: 100%;
 
@@ -33,21 +34,21 @@
             &_btn {
                 width: 100px;
                 display: flex;
-              
-                button {  
+
+                button {
                     background: rgba(70, 163, 88, 1);
-                border: none;
-                padding: 10px;
-                font-size: 16px;
-                font-weight: 700;
-                color: white;
-                border-radius: 5px;
+                    border: none;
+                    padding: 10px;
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: white;
+                    border-radius: 5px;
                     cursor: pointer;
                 }
 
                 .remove {
                     background: white;
-                      color: rgba(61, 61, 61, 1);
+                    color: rgba(61, 61, 61, 1);
 
                 }
             }
@@ -87,7 +88,7 @@
 }
 
 .file-label {
-    display:flex;
+    display: flex;
     width: 50px;
     height: 50px;
     background: rgba(251, 251, 251, 1);
@@ -98,13 +99,15 @@
     cursor: pointer;
 
     img {
-        width: 20px;
-        height: 20px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
     }
 }
 
 
-.btns{
+.btns {
     display: flex;
     gap: 20px;
     margin-top: 20px;
@@ -112,11 +115,12 @@
 }
 
 
-.modal-actions{
+.modal-actions {
     display: flex;
     gap: 10px;
     justify-content: center;
-    button{
+
+    button {
         width: 200px;
         border-radius: 5px 0px 0px 0px;
         background: rgba(70, 163, 88, 1);

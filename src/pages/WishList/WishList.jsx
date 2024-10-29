@@ -1,14 +1,13 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../../pages/WishList/WishList.module.scss'
-import Header from '../../components/Header/Header'
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
 import SideBar from '../../components/sidebar'
 import { useAuth } from '../../AuthContext'
 import LoadingBar from '../../components/UI/Loading/Loading'
+import Header from '../../components/Header/Header'
 
 export default function WishList() {
     const [loading, setLoading] = useState(true)
-
     const { favoriteItems,
         setFavoriteItems,
         handleAddToFavorite,
@@ -29,17 +28,17 @@ export default function WishList() {
             setLoading(false);
         }, 3000);
     }, []);
+
     return (
         <>
             <div>
                 {loading && <LoadingBar />}
                 <Header />
+                <Breadcrumbs />
                 <div className="container">
                     <section className={styles.wishlist}>
                         {/* <div className={styles.wrap}> */}
                         <SideBar />
-
-
                         <div className={styles.wishlist_item}>
                             {favoriteItems.map((item) => (
                                 <div key={item.id} className={styles.card}>
