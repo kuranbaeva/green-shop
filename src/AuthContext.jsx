@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    const navigate = useNavigate()
     const [totalPrice, setTotalPrice] = useState(0);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [getItemCount] = useState();
@@ -98,9 +99,18 @@ export const AuthProvider = ({ children }) => {
             handleAddToFavorite(item);
         }
     };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('userAvatar')
+        setIsAuthenticated(false)
+        navigate('/');
+    };
     return (
 
-        <AuthContext.Provider value={{ isAuthenticated, isItemInCart, isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice, handleCartClick, handleFavClick, favoriteItems, setFavoriteItems, getItemCount }}>
+        <AuthContext.Provider value={{ handleLogout, isAuthenticated, isItemInCart, isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice, handleCartClick, handleFavClick, favoriteItems, setFavoriteItems, getItemCount }}>
 
             {children}
         </AuthContext.Provider>

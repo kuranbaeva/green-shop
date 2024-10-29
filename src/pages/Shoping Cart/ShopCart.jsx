@@ -165,6 +165,7 @@ export default function ShopCart() {
 
                                 </div>
                                 <div className={styles.cart_item_total_elem_btn}>
+
                                     <Link to='/'>
                                         <button>Continue Shopping</button>
                                     </Link>

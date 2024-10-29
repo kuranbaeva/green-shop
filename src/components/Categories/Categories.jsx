@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from '../../components/Categories/Categories.module.scss'
-// import Renge from '../../components/Range/Price'
 import Button from '../ButtonCat/Button'
 
 export default function Categories({onCategoryChange} ) {
@@ -16,12 +15,6 @@ export default function Categories({onCategoryChange} ) {
                         <div className={styles.categoria_item_btns}>
                             <Button onCategoryChange={onCategoryChange} />
                         </div>
-
-                        {/* <div className={styles.categoria_item_price}>
-                            <Renge />
-                        </div> */}
-
-                
 
                     </div>
                     <div className={styles.categoria_sale}>

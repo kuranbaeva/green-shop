@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+ import React, { useState, useEffect } from 'react'
 import { useLocation, useParams, Link, useNavigate } from 'react-router-dom'
 import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
 import styles from '../../pages/Shop/Shop.module.scss'
@@ -19,6 +19,7 @@ export default function Shop() {
   const [onLike, setOnLike] = useState(false);
   const [activeSection, setActiveSection] = useState('desc');
   const { handleQuantityChange, handleAddToCart } = useAuth();
+
   const [randomItem, setRandomItem] = useState(null);
   const location = useLocation();
   const { id } = useParams();
@@ -26,22 +27,25 @@ export default function Shop() {
   const [quantity, setQuantity] = useState(item?.quantity || 1);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
+  
+ useEffect(() => {
+    const fetchRandomItem = async () => {
+      try {
+        const response = await axios.get('/product');
+        const randomIndex = Math.floor(Math.random() * response.data.results.length);
+        setRandomItem(response.data.results[randomIndex]);
+        setLoading(false);
+      } catch (error) {
+        console.error('Ошибка при загрузке товара:', error);
+        setLoading(false); 
+      }
+    };
 
     if (!item) {
-      const fetchRandomItem = async () => {
-        try {
-          const response = await axios.get('/product');
-          const randomIndex = Math.floor(Math.random() * response.data.results.length);
-          setRandomItem(response.data.results[randomIndex]);
-        } catch (error) {
-          console.error('Ошибка при загрузке товара:', error);
-        }
-      };
       fetchRandomItem();
     } else {
       setQuantity(item.quantity);
+      setLoading(false);
     }
   }, [item]);
 
@@ -53,27 +57,13 @@ export default function Shop() {
     setOnLike(!onLike);
   };
 
-  const handleMouseEnter = (path) => {
-    setHover(path);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(null);
-  };
-
   const handleBuyNow = () => {
     navigate('/check', { state: { item } });
   };
 
-  if (!item) {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
+  if (loading) {
+    return <LoadingBar />;
   }
-
-
   const settings = {
     dots: false,
     infinite: true,
@@ -104,13 +94,9 @@ export default function Shop() {
       },
     ],
   };
-
-
-
   return (
     <>
       <div>
-        {loading && <LoadingBar />}
         <div className={styles.header}>
           <Header />
         </div>
@@ -178,7 +164,6 @@ export default function Shop() {
                       handleQuantityChange(item.id, newQuantity);
                     }}
                     stock={item.stock}
-
                   />
                   <div className={styles.shop_item_infor_cart_buy}>
                     <button onClick={handleBuyNow}>Buy Now</button>
@@ -300,6 +285,8 @@ export default function Shop() {
 
                       />
                     </div>
+                    
+                    
 
                     <div className={styles.shop_mini_bottom_count_price}>
                       <p>
@@ -325,74 +312,6 @@ export default function Shop() {
           </div>
 
         </section>
-
-        <section className={styles.description}>
-          <div className='container'>
-            <div className={styles.description_item}>
-              <div className={styles.description_item_nav}>
-                <nav>
-                  <ul>
-                    <li>
-                      <button
-                        className={activeSection === 'desc' ? styles.active : ''}
-                        onClick={() => handleSectionChange('desc')}
-                        onMouseEnter={() => handleMouseEnter('/')}
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        Product Description
-                      </button>
-                    </li>
-                    <li>
-                      <button
-                        className={activeSection === 'reviews' ? styles.active : ''}
-                        onClick={() => handleSectionChange('reviews')}
-                        onMouseEnter={() => handleMouseEnter('/')}
-                        onMouseLeave={handleMouseLeave}
-                      >
-                        Reviews
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <div className={styles.description_item_title}>
-                {activeSection === 'desc' && (
-                  <div>
-                    <p>{item.description}</p>
-                  </div>
-                )}
-                {activeSection === 'reviews' && (
-                  <div>
-                    <p>
-                      Customer reviews will appear here.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className={styles.products}>
-          <div className='container'>
-            <div className={styles.products_item}>
-              <h4>
-                Releted Products
-              </h4>
-              <div className={styles.products_item_cards}>
-                <SliderCard />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <footer className={styles.footer}>
-          <div className="container">
-            <Footer />
-          </div>
-        </footer>
-      </div>
-
-    </>
+          </>
   );
 }

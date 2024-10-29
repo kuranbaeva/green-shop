@@ -1,17 +1,20 @@
+
 import React, { useState, useEffect } from 'react'
+
 import styles from '../../pages/WishList/WishList.module.scss'
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
 import SideBar from '../../components/sidebar'
 import { useAuth } from '../../AuthContext'
+
 import LoadingBar from '../../components/UI/Loading/Loading'
 import Header from '../../components/Header/Header'
 
 export default function WishList() {
     const [loading, setLoading] = useState(true)
     const { favoriteItems,
-        setFavoriteItems,
-        handleAddToFavorite,
-        handleCartClick,
+         setFavoriteItems,
+          handleAddToFavorite,
+           handleCartClick,
         isItemInCart,
         isItemInFavorite,
         handleFavClick } = useAuth()
@@ -61,33 +64,24 @@ export default function WishList() {
                                     {favItems.includes(item.id)
                                         ? <img src="/assets/img/fullHeart.png" alt="" />
                                         : <img src="/assets/img/heart.png" alt="" />
+
                                     }
-                                </button> */}
-                                                <button
-                                                    onClick={() => handleFavClick(item)}
-                                                >
-                                                    {isItemInFavorite(item.id)
-                                                        ? <img src="/assets/img/fullHeart.png" alt="" />
-                                                        : <img src="/assets/img/heart.png" alt="" />
-                                                    }
-                                                </button>
+                                </button>
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.card_infor}>
-                                        <h4>{item.name}</h4>
-                                        <p>${item.price}</p>
-                                    </div>
-                                </div>
-                            ))}
+                            </div>
                         </div>
-                        {/* </div> */}
-
-                    </section>
+                    </div>
+                    <div className={styles.card_infor}>
+                        <h4>{item.name}</h4>
+                        <p>${item.price}</p>
+                    </div>
                 </div>
-            </div>
+            ))}
+                    </div>
+                 
 
+                </section>
+            </div>
         </>
     )
 }

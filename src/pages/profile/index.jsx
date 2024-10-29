@@ -7,12 +7,14 @@ import SideBar from '../../components/sidebar';
 import { useAuth } from '../../AuthContext';
 import LoadingBar from '../../components/UI/Loading/Loading';
 import Header from '../../components/Header/Header';
+import { LogOut } from 'lucide-react';
+
 
 export default function Profile() {
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [error, setError] = useState({});
-    const { setIsAuthenticated } = useAuth();
+    const { setIsAuthenticated,,handleLogout } = useAuth();
     const [loading, setLoading] = useState(true);
 
     const [profile, setProfile] = useState({
@@ -126,7 +128,9 @@ export default function Profile() {
             <Header />
             <div className="container">
                 <div className="profile">
-                    <SideBar />
+                    <div className='sidebar'>
+                        <SideBar/>
+                        </div>
                     <form className='form' onSubmit={handleSubmit}>
                         <h4>Personal Information</h4>
                         <div className="profile__information">
@@ -191,8 +195,15 @@ export default function Profile() {
                             </div>
                         </div>
                     </form>
+                    <div className="change">
 
-                    <ChangePassword />
+                        <ChangePassword />
+                    </div>
+                    <div className="logoutt">
+                        <button onClick={handleLogout} className='logout'>
+                            <LogOut />Logout
+                        </button>
+                    </div>
 
                     {showModal && (
                         <div className="modal">

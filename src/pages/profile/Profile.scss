@@ -3,6 +3,10 @@
     gap: 15px;
     margin-top: 50px;
 
+.logout{
+    display: none;
+}
+
     .form {
         width: 100%;
 
@@ -80,7 +84,21 @@
         }
 
     }
-
+.logoutt{
+    display: none;
+    button{
+        width: 100%;
+        color: rgba(70, 163, 88, 1);
+        margin-top: 10px;
+        padding-top: 10px;
+        background: transparent;
+        text-align-last: right;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        justify-content: end;
+    }
+}
 }
 
 .file-input {
@@ -121,7 +139,9 @@
     justify-content: center;
 
     button {
-        width: 200px;
+
+        width: 180px;
+
         border-radius: 5px 0px 0px 0px;
         background: rgba(70, 163, 88, 1);
         border: none;
@@ -133,4 +153,43 @@
         margin-top: 10px;
         text-align: center;
     }
+}
+
+
+
+
+@media(max-width:780px) {
+    .profile {
+        height: 130vh;
+        display: block;
+
+        // .sidebar {
+        //     display: none;
+        // }
+
+        .form {
+            h4 {
+                font-size: 20px;
+                font-weight: 700;
+
+            }
+
+            .profile__information{
+                label{
+                    p{
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+
+        }
+
+        .change {
+            margin-top: 25px;
+        }
+   .logoutt{
+      display: flex;
+    }  }
+   
 }

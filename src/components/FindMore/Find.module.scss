@@ -70,3 +70,51 @@
     }
 
 }
+
+
+
+@media(max-width:540px){
+    .find_item_cards {
+        &_card {
+            height: 200px;
+            &_img {
+                position: relative;
+
+                img {
+                    position: absolute;
+                    left: -30px;
+                    width: 240px;
+                }
+            }
+
+            &_infor {
+                right: 0;
+
+                h3 {
+                    font-size: 20px;
+                    margin-right: 10px;
+
+                }
+
+                p {
+                  display: none;
+                }
+
+                &_btn {
+                 
+                    display: flex;
+                    align-items: end;
+                    justify-content: end;
+                    margin-top: 10px;
+                    padding: 5px 10px;
+
+                    button {
+                        display: flex;
+                        gap: 5px;
+                        // font-size: 10px;
+                    }
+                }
+            }
+        }
+    }
+}

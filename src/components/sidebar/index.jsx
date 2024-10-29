@@ -5,15 +5,8 @@ import './SideBar.scss'
 import { useAuth } from '../../AuthContext';
 export default function SideBar() {
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAuth();
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('userAvatar')
-    setIsAuthenticated(false)
-    navigate('/');
-  };
+  const { setIsAuthenticated,handleLogout } = useAuth();
+ 
   const handleOpenItem = (item) => {
     navigate(`/wish/${item.id}`, { state: { item } });
   };
