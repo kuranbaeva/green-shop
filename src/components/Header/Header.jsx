@@ -7,6 +7,7 @@ import { ShoppingCart, User } from 'lucide-react';
 import { useAuth } from '../../AuthContext';
 import Header_Login from '../header_login';
 
+
 export default function Header() {
   const [hover, setHover] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -52,6 +53,7 @@ export default function Header() {
     <div className="container">
       <div className={styles.header}>
         <div className={styles.header_item}>
+          {/* <div className={styles.block}> */}
           <div className={styles.header_item_logo}>
             <img src="/assets/svg/logo.svg" alt="" />
           </div>
@@ -138,7 +140,7 @@ export default function Header() {
             </div>
           </div>
 
-
+          {/* </div> */}
           <div className={`${styles.header_item_bottom} ${styles.bottom_block}`}>
             <div className={styles.header_item_bottom_nav}>
               <nav>
@@ -159,9 +161,21 @@ export default function Header() {
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to='/profile'>
+                    {/* <NavLink to='/profile'>
                       <img src="/assets/img/personFot.png" alt="" />
-                    </NavLink>
+                    </NavLink> */}
+                    <div className={`header_item_navigation_login ${isLoginOpen ? 'open' : ''}`}>
+                      {isAuthenticated ? (
+                
+                      <NavLink to='/profile'>
+                      <img src="/assets/img/personFot.png" alt="" />
+                    </NavLink> 
+                      ) : (
+                        <div onClick={toggleLoginModal}>
+                          <img width={40} height={40} src="/assets/img/personFot.png" alt="" />
+                        </div>
+                      )}
+                    </div>
                   </li>
                 </ul>
               </nav>

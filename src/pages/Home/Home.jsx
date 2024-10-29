@@ -9,7 +9,7 @@ import FindCard from '../../components/FindMore/Find';
 import Blog from '../../components/Blog/Blog';
 import Footer from '../../components/Footer/Footer';
 import Slider from '../../components/Slider/Slider';
-import Card from '../../components/Card/Card';
+import LoadingBar from '../../components/UI/Loading/Loading';
 
 export default function Home() {
     const { category } = useParams();
@@ -17,13 +17,21 @@ export default function Home() {
     const handleCategoryChange = (category) => {
         navigate(`/${category}`);
     };
+    const [loading, setLoading] = useState(true);
  
 
-  
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
+    }, []);
+
     return (
         <>
             <div>
-                <Header />
+            {loading && <LoadingBar />}
+            <div className={styles.header}>
+                <Header /></div>
                 <section className={styles.main}>
                     <div className='container'>
                         <Slider />
@@ -33,6 +41,7 @@ export default function Home() {
                 <section className={styles.plants}>
                     <div className='container'>
                         <div className={styles.plants_item}>
+                            
                             <Cat onCategoryChange={handleCategoryChange} />
                             <Products category={category} />
                         </div>

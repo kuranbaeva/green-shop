@@ -1,163 +1,94 @@
-import React, { useState, useEffect } from 'react'
-import { useLocation, useParams,Link ,useNavigate} from 'react-router-dom'
-import Header from '../../components/Header/Header'
-import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
-import styles from '../../pages/Shop/Shop.module.scss'
-import Star from '../../components/UI/Star/StarBtn'
-import Footer from '../../components/Footer/Footer'
-import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
-import Slider from 'react-slick'
-import SliderCard from '../../components/SliderCard/SliderCard'
-import Count from '../../components/Count/Count'
-import { useAuth } from '../../AuthContext'
-import axios from '../../axios'
-import LoadingBar from '../../components/UI/Loading/Loading'
+import React, { useState, useEffect } from 'react';
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import { Search, Minus, Plus, Twitter, Linkedin, Mail, Facebook } from 'lucide-react';
+import styles from '../../pages/Shop/Shop.module.scss';
+import Star from '../../components/UI/Star/StarBtn';
+import Footer from '../../components/Footer/Footer';
+import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
+import SliderCard from '../../components/SliderCard/SliderCard';
+import Count from '../../components/Count/Count';
+import { useAuth } from '../../AuthContext';
+import axios from '../../axios';
+import LoadingBar from '../../components/UI/Loading/Loading';
 
 export default function Shop() {
-    const [onLike, setOnLike] = useState(false);
-    const [activeSection, setActiveSection] = useState('desc');
-    const { handleQuantityChange, handleAddToCart } = useAuth();
-    const [randomItem, setRandomItem] = useState(null);
-    const location = useLocation();
-    const { id } = useParams();
-    const item = location.state?.item || randomItem;
-    const [quantity, setQuantity] = useState(item?.quantity || 1);
-    const navigate = useNavigate();
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        if (!item) {
-            const fetchRandomItem = async () => {
-                try {
-                    const response = await axios.get('/product');
-                    const randomIndex = Math.floor(Math.random() * response.data.results.length);
-                    setRandomItem(response.data.results[randomIndex]);
-                } catch (error) {
-                    console.error('Ошибка при загрузке товара:', error);
-                }
-            };
-            fetchRandomItem();
-        } else {
-            setQuantity(item.quantity); 
-        }
-    }, [item]);
 
-    const handleSectionChange = (section) => {
-        setActiveSection(section);
+  const [onLike, setOnLike] = useState(false);
+  const [activeSection, setActiveSection] = useState('desc');
+  const { handleQuantityChange, handleAddToCart,  handleFavClick,  isItemInFavorite  } = useAuth();
+  const [randomItem, setRandomItem] = useState(null);
+  const location = useLocation();
+  const { id } = useParams();
+  const item = location.state?.item || randomItem;
+  const [quantity, setQuantity] = useState(item?.quantity || 1);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchRandomItem = async () => {
+      try {
+        const response = await axios.get('/product');
+        const randomIndex = Math.floor(Math.random() * response.data.results.length);
+        setRandomItem(response.data.results[randomIndex]);
+        setLoading(false);
+      } catch (error) {
+        console.error('Ошибка при загрузке товара:', error);
+        setLoading(false); 
+      }
     };
 
-    const handleOnLike = () => {
-        setOnLike(!onLike);
-    };
-
-    const handleMouseEnter = (path) => {
-                setHover(path);
-            };
-        
-            const handleMouseLeave = () => {
-                setHover(null);
-            };
-        
-            if (!item) {
-                return <div>Loading...</div>; 
-            }  
-
-            const handleBuyNow = () => {
-              navigate('/check', { state: { item } });
-          };
-if (!item) {
-    return setTimeout(() => {
+    if (!item) {
+      fetchRandomItem();
+    } else {
+      setQuantity(item.quantity);
       setLoading(false);
-    }, 3000);
+    }
+  }, [item]);
 
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+  };
+
+  const handleOnLike = () => {
+    setOnLike(!onLike);
+  };
+
+  const handleBuyNow = () => {
+    navigate('/check', { state: { item } });
+  };
+
+  if (loading) {
+    return <LoadingBar />;
   }
 
-      return (
-        <>
-          <div>
-          {loading && <LoadingBar />}
-            <Header />
-            <Breadcrumbs/>
-            <section className={styles.shop}>
-              <div className="container">
-                <div className={styles.shop_item}>
-                  <div className={styles.shop_item_content}>
-                    <div className={styles.shop_item_content_species}>
-                      {item.image && (
-                       <> 
-                         <div className={styles.shop_item_content_species_img}>
-                          <img src={item.image} alt={item.name} />
-                        </div>
-                        <div className={styles.shop_item_content_species_img}>
-                          <img src={item.image} alt={item.name} />
-                        </div>
-                        <div className={styles.shop_item_content_species_img}>
-                          <img src={item.image} alt={item.name} />
-                        </div>
-                        <div className={styles.shop_item_content_species_img}>
-                          <img src={item.image} alt={item.name} />
-                        </div>
-                       </>
-                      
-                         
-
-                      )}
+  return (
+    <>
+      <div>
+        <Header />
+        <Breadcrumbs />
+        <section className={styles.shop}>
+          <div className="container">
+            <div className={styles.shop_item}>
+              <div className={styles.shop_item_content}>
+                <div className={styles.shop_item_content_species}>
+               
+                {item.images && Array.isArray(item.images) && item.images.length > 0 ? (
+                  item.images.map((imgObj, index) => (
+                    <div key={imgObj.id} className={styles.shop_item_content_species_img}>
+                      <img src={imgObj.image} alt={`${item.name} ${index + 1}`} />
                     </div>
-                    <div className={styles.shop_item_content_block}>
-                      <div className={styles.shop_item_content_block_icon}>
-                        <Search />
-                      </div>
-                      <img src={item.image} alt={item.name} />
-                    </div>
-                  </div>
-                  <div className={styles.shop_item_infor}>
-                    <div className={styles.shop_item_infor_title}>
-                      <h2>{item.name}</h2>
-                      <div className={styles.shop_item_infor_title_price}>
-                        <p>{item.price}</p>
-                        <div className={styles.review}>
-                          <Star />
-                        </div>
-                      </div>
-                    </div>
-                    <div className={styles.shop_item_infor_text}>
-                      <h4>Short Description:</h4>
-                      <p>{item.description}</p>
-                    </div>
-
-                    <div className={styles.shop_item_infor_cart}>
-                      <Count
-                        itemId={item.id}
-                        initialQuantity={item.quantity || 1}
-                        onQuantityChange={(newQuantity) => {
-                          setQuantity(newQuantity);
-                          handleQuantityChange(item.id, newQuantity);
-                        }}
-                        stock={item.stock} 
-
-                      />
-                      <div className={styles.shop_item_infor_cart_buy}>
-                      <button onClick={handleBuyNow}>Buy Now</button>
-                      </div>
-                      <div className={styles.shop_item_infor_cart_add}>
-                       <Link><button onClick={() => handleAddToCart({ ...item, quantity })}>
-                          add to cart
-                        </button></Link> 
-
-                      </div>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
-                      </div>
-                    </>
-
-
-
-                  )}
+                  ))
+                ) : (
+                  <p>Изображения отсутствуют</p>
+                )}
+                
+               
                 </div>
                 <div className={styles.shop_item_content_block}>
                   <div className={styles.shop_item_content_block_icon}>
                     <Search />
                   </div>
-
                   <img src={item.image} alt={item.name} />
                 </div>
               </div>
@@ -185,20 +116,27 @@ if (!item) {
                       handleQuantityChange(item.id, newQuantity);
                     }}
                     stock={item.stock}
-
                   />
                   <div className={styles.shop_item_infor_cart_buy}>
                     <button onClick={handleBuyNow}>Buy Now</button>
                   </div>
                   <div className={styles.shop_item_infor_cart_add}>
-                    <button onClick={() => handleAddToCart({ ...item, quantity })}>
-                      add to cart
-                    </button>
+                    <Link>
+                      <button onClick={() => handleAddToCart({ ...item, quantity })}>
+                        add to cart
+                      </button>
+                    </Link>
                   </div>
                   <div className={styles.shop_item_infor_cart_like}>
-                    <button onClick={handleOnLike}>
-                      {onLike ? <img src="/assets/img/fullHeart.png" alt="" /> : <img src="/assets/img/greenHeart.png" alt="" />}
-                    </button>
+               
+                  <button
+                                    onClick={() => handleFavClick(item)}
+                                >
+                                    {isItemInFavorite(item.id)
+                                        ? <img src="/assets/img/fullHeart.png" alt="" />
+                                        : <img src="/assets/img/greenHeart.png" alt="" />
+                                    }
+                                </button>
                   </div>
                 </div>
 
@@ -225,10 +163,9 @@ if (!item) {
               </div>
             </div>
           </div>
-
         </section>
         <section className={styles.description}>
-          <div className='container'>
+          <div className="container">
             <div className={styles.description_item}>
               <div className={styles.description_item_nav}>
                 <nav>
@@ -237,8 +174,6 @@ if (!item) {
                       <button
                         className={activeSection === 'desc' ? styles.active : ''}
                         onClick={() => handleSectionChange('desc')}
-                        onMouseEnter={() => handleMouseEnter('/')}
-                        onMouseLeave={handleMouseLeave}
                       >
                         Product Description
                       </button>
@@ -247,8 +182,6 @@ if (!item) {
                       <button
                         className={activeSection === 'reviews' ? styles.active : ''}
                         onClick={() => handleSectionChange('reviews')}
-                        onMouseEnter={() => handleMouseEnter('/')}
-                        onMouseLeave={handleMouseLeave}
                       >
                         Reviews
                       </button>
@@ -264,9 +197,7 @@ if (!item) {
                 )}
                 {activeSection === 'reviews' && (
                   <div>
-                    <p>
-                      Customer reviews will appear here.
-                    </p>
+                    <p>Customer reviews will appear here.</p>
                   </div>
                 )}
               </div>
@@ -275,11 +206,9 @@ if (!item) {
         </section>
 
         <section className={styles.products}>
-          <div className='container'>
+          <div className="container">
             <div className={styles.products_item}>
-              <h4>
-                Releted Products
-              </h4>
+              <h4>Releted Products</h4>
               <div className={styles.products_item_cards}>
                 <SliderCard />
               </div>

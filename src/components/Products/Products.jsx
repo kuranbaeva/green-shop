@@ -10,11 +10,11 @@ export default function Products() {
 
     useEffect(() => {
         if (!category) {
-            axios.get('products/')
+            axios.get('product/')
                 .then(res => setProducts(res.data.results))
                 .catch(err => console.log('Ошибка при получении товаров', err));
         } else {
-            axios.get(`products/?category=${category}`)
+            axios.get(`product/?category=${category}`)
                 .then(res => setProducts(res.data.results))
                 .catch(err => console.log('Ошибка при получении товаров по категории', err));
         }

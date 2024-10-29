@@ -2,6 +2,9 @@
     display: flex;
     gap: 15px;
     margin-top: 50px;
+.logout{
+    display: none;
+}
     .form {
         width: 100%;
 
@@ -33,21 +36,21 @@
             &_btn {
                 width: 100px;
                 display: flex;
-              
-                button {  
+
+                button {
                     background: rgba(70, 163, 88, 1);
-                border: none;
-                padding: 10px;
-                font-size: 16px;
-                font-weight: 700;
-                color: white;
-                border-radius: 5px;
+                    border: none;
+                    padding: 10px;
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: white;
+                    border-radius: 5px;
                     cursor: pointer;
                 }
 
                 .remove {
                     background: white;
-                      color: rgba(61, 61, 61, 1);
+                    color: rgba(61, 61, 61, 1);
 
                 }
             }
@@ -79,7 +82,21 @@
         }
 
     }
-
+.logoutt{
+    display: none;
+    button{
+        width: 100%;
+        color: rgba(70, 163, 88, 1);
+        margin-top: 10px;
+        padding-top: 10px;
+        background: transparent;
+        text-align-last: right;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        justify-content: end;
+    }
+}
 }
 
 .file-input {
@@ -87,7 +104,7 @@
 }
 
 .file-label {
-    display:flex;
+    display: flex;
     width: 50px;
     height: 50px;
     background: rgba(251, 251, 251, 1);
@@ -104,7 +121,7 @@
 }
 
 
-.btns{
+.btns {
     display: flex;
     gap: 20px;
     margin-top: 20px;
@@ -112,12 +129,13 @@
 }
 
 
-.modal-actions{
+.modal-actions {
     display: flex;
     gap: 10px;
     justify-content: center;
-    button{
-        width: 200px;
+
+    button {
+        width: 180px;
         border-radius: 5px 0px 0px 0px;
         background: rgba(70, 163, 88, 1);
         border: none;
@@ -129,4 +147,43 @@
         margin-top: 10px;
         text-align: center;
     }
+}
+
+
+
+
+@media(max-width:780px) {
+    .profile {
+        height: 130vh;
+        display: block;
+
+        // .sidebar {
+        //     display: none;
+        // }
+
+        .form {
+            h4 {
+                font-size: 20px;
+                font-weight: 700;
+
+            }
+
+            .profile__information{
+                label{
+                    p{
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+
+        }
+
+        .change {
+            margin-top: 25px;
+        }
+   .logoutt{
+      display: flex;
+    }  }
+   
 }

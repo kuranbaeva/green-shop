@@ -12,7 +12,7 @@ export default function Baner() {
                     <div className={styles.main_page_item}>
                         <div className={styles.main_page_item_infor}>
                             <h5>
-                                Welcome to GreenShop
+                                WELCOME TO GREENSHOP
                             </h5>
                             <h2>
                                 Let’s Make a
@@ -24,6 +24,7 @@ export default function Baner() {
                             <p>
                                 We are an online plant shop offering a wide range of cheap and trendy plants. Use <br /> our plants to create an unique Urban Jungle. Order your favorite plants!
                             </p>
+                            <p className={styles.block}>We are an online plant shop offering a wide range </p>
                             <div className={styles.main_page_item_infor_btn}>
                                 <Link to='/shop'>
                                     <Button>

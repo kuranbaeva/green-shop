@@ -8,7 +8,6 @@ import Count from '../../components/Count/Count';
 import SliderCard from '../../components/SliderCard/SliderCard';
 import Footer from '../../components/Footer/Footer';
 import { useAuth } from '../../AuthContext';
-import { Link } from 'react-router-dom'
 import LoadingBar from '../../components/UI/Loading/Loading';
 
 
@@ -123,7 +122,10 @@ export default function ShopCart() {
 
                                 </div>
                                 <div className={styles.cart_item_total_elem_btn}>
+                                    <Link to='/'> 
                                     <button>Continue Shopping</button>
+                                    </Link>
+                                   
                                 </div>
                             </div>
                         </div>
