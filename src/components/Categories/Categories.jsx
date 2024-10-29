@@ -16,12 +16,6 @@ export default function Categories({onCategoryChange} ) {
                             <Button onCategoryChange={onCategoryChange} />
                         </div>
 
-                        {/* <div className={styles.categoria_item_price}>
-                            <Renge />
-                        </div> */}
-
-                
-
                     </div>
                     <div className={styles.categoria_sale}>
                         <img src="/assets/svg/sale.svg" alt="" />

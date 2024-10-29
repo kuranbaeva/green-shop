@@ -1,6 +1,6 @@
 
-import React, { useState,useEffect } from 'react';
-import { useParams,useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../../pages/Home/Home.module.scss';
 import Header from '../../components/Header/Header';
 import Cat from '../../components/Categories/Categories';
@@ -13,13 +13,12 @@ import LoadingBar from '../../components/UI/Loading/Loading';
 
 export default function Home() {
     const { category } = useParams();
+    const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
     const handleCategoryChange = (category) => {
         navigate(`/${category}`);
     };
     const [loading, setLoading] = useState(true);
- 
-
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
@@ -32,6 +31,7 @@ export default function Home() {
             {loading && <LoadingBar />}
             <div className={styles.header}>
                 <Header /></div>
+
                 <section className={styles.main}>
                     <div className='container'>
                         <Slider />

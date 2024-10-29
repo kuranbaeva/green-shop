@@ -11,7 +11,7 @@ import Header_Login from '../header_login';
 export default function Header() {
   const [hover, setHover] = useState(null);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const { isAuthenticated, setIsAuthenticated, cartItems } = useAuth()
+  const { isAuthenticated, setIsAuthenticated, cartItems, favoriteItems } = useAuth()
   const navigate = useNavigate();
   const [avatar, setAvatar] = useState(null);
 
@@ -48,6 +48,10 @@ export default function Header() {
     return cartItems.length;
   };
 
+  const getItemCounts = () => {
+    return favoriteItems.length;
+  };
+
 
   return (
     <div className="container">
@@ -57,7 +61,6 @@ export default function Header() {
           <div className={styles.header_item_logo}>
             <img src="/assets/svg/logo.svg" alt="" />
           </div>
-
           <div className={`${styles.header_item_nav} ${styles.nav_block}`}>
             <nav>
               <ul>
@@ -110,6 +113,11 @@ export default function Header() {
               <Link to='/wish'>
                 <img src="/assets/img/heart.png" alt="" />
               </Link>
+              <div className={styles.counts}>
+                <span>
+                  {getItemCounts()}
+                </span>
+              </div>
             </div>
             <div className={styles.header_item_navigation_cart}>
               <Link to='/cart'>
@@ -140,7 +148,6 @@ export default function Header() {
             </div>
           </div>
 
-          {/* </div> */}
           <div className={`${styles.header_item_bottom} ${styles.bottom_block}`}>
             <div className={styles.header_item_bottom_nav}>
               <nav>

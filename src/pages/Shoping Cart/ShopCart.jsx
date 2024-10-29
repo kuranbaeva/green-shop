@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../../pages/Shoping Cart/ShopCart.module.scss';
-import Header from '../../components/Header/Header';
 import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
 import Button from '../../components/UI/Button/Button';
 import Count from '../../components/Count/Count';
@@ -9,6 +8,7 @@ import SliderCard from '../../components/SliderCard/SliderCard';
 import Footer from '../../components/Footer/Footer';
 import { useAuth } from '../../AuthContext';
 import LoadingBar from '../../components/UI/Loading/Loading';
+import Header from '../../components/Header/Header'
 
 
 export default function ShopCart() {
@@ -39,25 +39,41 @@ export default function ShopCart() {
 
 
     const item = location.state?.item;
-    
+
     const [quantity, setQuantity] = useState(item?.quantity || 1);
 
     return (
         <div>
             {loading && <LoadingBar />}
-            <Header />
-            <Breadcrumbs />
+            <div className={styles.header}>
+                <Header />
+            </div>
+
+            <div className={styles.breadcrumbs}>
+                <Breadcrumbs />
+            </div>
+
             <section className={styles.cart}>
                 <div className="container">
+                    <div className={`${styles.title} ${styles.title_none}`}>
+                        <div className={styles.exit}>
+                            <Link to='/'>
+                                <img src="/assets/svg/exit.svg" alt="" />
+                            </Link>
+                        </div>
+                        <h2>
+                            Cart
+                        </h2>
+                    </div>
                     <div className={styles.cart_item}>
                         <div className={styles.cart_item_product}>
-                            <div className={styles.cart_item_product_infor}>
+                            <div className={`${styles.cart_item_product_infor} ${styles.infor_none}`}>
                                 <h2>Products</h2>
                                 <h2>Price</h2>
                                 <h2>Quantity</h2>
                                 <h2>Total</h2>
                             </div>
-                            <div className={styles.cart_item_product_elem}>
+                            <div className={`${styles.cart_item_product_elem} ${styles.elem_none}`}>
                                 {cartItems.map(item => (
                                     <div key={item.id} className={styles.cart_item_product_elem_cards}>
                                         <div className={styles.cart_item_product_elem_cards_card}>
@@ -71,11 +87,6 @@ export default function ShopCart() {
                                                 <h3>${item.price}</h3>
                                             </div>
                                             <div className={styles.count}>
-                                                {/* <Count 
-                                                    itemId={item.id} 
-                                                    initialQuantity={item.quantity} 
-                                                    onQuantityChange={handleQuantityChange}
-                                                /> */}
                                                 <Count
                                                     itemId={item.id}
                                                     initialQuantity={item.quantity || 1}
@@ -98,8 +109,41 @@ export default function ShopCart() {
                                     </div>
                                 ))}
                             </div>
+
+                            <div className={styles.cart_mini}>
+                                {cartItems.map(item => (
+                                    <div key={item.id} className={styles.cart_mini_item}>
+                                        <div className={styles.cart_mini_item_elem}>
+                                            <img src={item.image} alt={item.name} />
+                                        </div>
+
+                                        <div className={styles.cart_mini_item_product}>
+                                            <div className={styles.cart_mini_item_product_pri}>
+                                                <div className={styles.title}>
+                                                    <h4>{item.name}</h4>
+                                                </div>
+                                                <div className={styles.count}>
+                                                    <Count
+                                                        itemId={item.id}
+                                                        initialQuantity={item.quantity || 1}
+                                                        onQuantityChange={(newQuantity) => {
+                                                            setQuantity(newQuantity)
+                                                            handleQuantityChange(item.id, newQuantity);
+                                                        }}
+                                                        stock={item.stock}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className={styles.price}>
+                                                <h3>${item.price}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className={styles.cart_item_total}>
+
+                        <div className={`${styles.cart_item_total} ${styles.product_block}`}>
                             <div className={styles.cart_item_total_title}>
                                 <h2>Cart Totals</h2>
                             </div>
@@ -117,16 +161,37 @@ export default function ShopCart() {
 
                                     <Link to='/check'>
                                         <Button>Proceed To Checkout</Button>
-
                                     </Link>
 
                                 </div>
                                 <div className={styles.cart_item_total_elem_btn}>
-                                    <Link to='/'> 
-                                    <button>Continue Shopping</button>
+
+                                    <Link to='/'>
+                                        <button>Continue Shopping</button>
                                     </Link>
-                                   
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.cart_item_bottom}>
+                        <div className={styles.cart_item_bottom_title}>
+                            <h2>Cart Totals</h2>
+                        </div>
+                        <div className={styles.cart_item_bottom_elem}>
+                            <div className={styles.cart_item_bottom_elem_title}>
+                                <h3>Subtotal</h3>
+                                <p>${totalPrice.toFixed(2)}</p>
+                            </div>
+
+                            <div className={styles.cart_item_bottom_elem_titles}>
+                                <h2>Total</h2>
+                                <p>${(totalPrice).toFixed(2)}</p>
+                            </div>
+                            <div className={styles.cart_item_bottom_elem_btns}>
+                                <Link to='/check'>
+                                    <Button>Proceed To Checkout</Button>
+                                </Link>
                             </div>
                         </div>
                     </div>

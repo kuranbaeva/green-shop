@@ -45,8 +45,10 @@ button {
 }
 
 
-// @media(max-width:780px){
-//    .sidebar{
-//             display: none;
-//         }
-// }
+body {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

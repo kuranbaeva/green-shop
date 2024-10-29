@@ -8,12 +8,13 @@ import { AuthProvider } from './AuthContext';
 import Checkout from './pages/Checkout/Checkout'
 import WishList from './pages/WishList/WishList'
 import Paginate from './components/Paginate/Paginate';
+import Header from './components/Header/Header';
 
 export default function App() {
   return (
     <AuthProvider>
       <Routes>
-      <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home />} />
         <Route path='/:category?' element={<Home />} />
         <Route path='/shop/:id' element={<Shop />} />
         <Route path='/shop' element={<Shop />} />

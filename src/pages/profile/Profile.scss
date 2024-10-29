@@ -2,9 +2,11 @@
     display: flex;
     gap: 15px;
     margin-top: 50px;
+
 .logout{
     display: none;
 }
+
     .form {
         width: 100%;
 
@@ -115,8 +117,10 @@
     cursor: pointer;
 
     img {
-        width: 20px;
-        height: 20px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+
     }
 }
 
@@ -135,7 +139,9 @@
     justify-content: center;
 
     button {
+
         width: 180px;
+
         border-radius: 5px 0px 0px 0px;
         background: rgba(70, 163, 88, 1);
         border: none;
