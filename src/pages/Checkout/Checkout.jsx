@@ -31,14 +31,14 @@ export default function Checkout() {
         if (itemFromBuyNow) {
             storedCartItems.push({
                 ...itemFromBuyNow,
-                quantity: itemFromBuyNow.quantity || 1,
+                count: itemFromBuyNow.count || 1,
             });
         }
         setCartItems(storedCartItems);
     }, [setCartItems]);
 
     useEffect(() => {
-        const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+        const total = cartItems.reduce((acc, item) => acc + item.price * item.count, 0);
         setTotalPrice(total);
 
         setFormData(prevFormData => ({
@@ -47,7 +47,7 @@ export default function Checkout() {
                 products: item.id,
                 quantity: item.quantity,
                 name: item.name,
-                count: item.quantity,
+                count: item.count,
                 price: item.price
             }))
         }));
@@ -70,7 +70,7 @@ export default function Checkout() {
             phone: fullPhoneNumber,
             items: cartItems.map(item => ({
                 product: item.id,
-                quantity: item.quantity,
+                count: item.count,
             })),
             totalPrice
         };
@@ -90,7 +90,7 @@ export default function Checkout() {
                     items: []
                 });
                 setTotalPrice(0);
-                setIsModalOpen(true); // Open modal on successful submission
+                setIsModalOpen(true); 
             })
             .catch(err => {
                 console.log('Error placing order', err);
@@ -232,7 +232,7 @@ export default function Checkout() {
                                                     </div>
                                                 </div>
                                                 <div className={styles.count}>
-                                                    <p>(x {item.quantity})</p>
+                                                    <p>(x {item.count})</p>
                                                 </div>
                                                 <div className={styles.price}>
                                                     <p>{item.price}</p>
