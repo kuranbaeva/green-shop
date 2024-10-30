@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 
 import styles from '../../pages/WishList/WishList.module.scss'
@@ -40,6 +39,7 @@ export default function WishList() {
                 <Breadcrumbs />
                 <div className="container">
                     <section className={styles.wishlist}>
+                        {/* <div className={styles.wrap}> */}
                         <SideBar />
                         <div className={styles.wishlist_item}>
                             {favoriteItems.map((item) => (
@@ -58,7 +58,17 @@ export default function WishList() {
                                                     }
                                                 </button>
                                             </div>
-                                          
+                                            <div className={styles.btn}>
+                                                <button
+                                                    onClick={() => handleFavClick(item)}
+                                                >
+                                                    {isItemInFavorite(item.id)
+                                                        ? <img src="/assets/img/fullHeart.png" alt="" />
+                                                        : <img src="/assets/img/heart.png" alt="" />
+                                                    }
+                                                </button>
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={styles.card_infor}>
@@ -72,6 +82,7 @@ export default function WishList() {
 
                     </section>
                 </div>
+
             </div>
         </>
     )
