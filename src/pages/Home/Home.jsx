@@ -13,7 +13,6 @@ import LoadingBar from '../../components/UI/Loading/Loading';
 
 export default function Home() {
     const { category } = useParams();
-    const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
     const handleCategoryChange = (category) => {
         navigate(`/${category}`);
@@ -28,9 +27,9 @@ export default function Home() {
     return (
         <>
             <div>
-            {loading && <LoadingBar />}
-            <div className={styles.header}>
-                <Header /></div>
+                {loading && <LoadingBar />}
+                <div className={styles.header}>
+                    <Header /></div>
 
                 <section className={styles.main}>
                     <div className='container'>
@@ -41,7 +40,7 @@ export default function Home() {
                 <section className={styles.plants}>
                     <div className='container'>
                         <div className={styles.plants_item}>
-                            
+
                             <Cat onCategoryChange={handleCategoryChange} />
                             <Products category={category} />
                         </div>

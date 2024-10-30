@@ -1,0 +1,49 @@
+.carousel-container {
+    display: flex;
+    align-items: center;
+}
+
+.thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.thumbnail {
+    cursor: pointer;
+    border: 1px solid transparent;
+    padding: 5px;
+}
+
+.thumbnail.selected {
+    border-color: #46A358;
+}
+
+.thumbnail {
+    background: #FBFBFB;
+    border-radius: 8px;
+
+    img {
+        object-fit: cover;
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+}
+
+.main-preview {
+    background: #FBFBFB;
+    width: 444px;
+    height: 484px;
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 10px;
+
+    img {
+        max-width: 404px;
+        height: 404px;
+        width: 100%;
+
+    }
+}
