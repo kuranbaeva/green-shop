@@ -18,11 +18,13 @@ export const AuthProvider = ({ children }) => {
 
     const [favoriteItems, setFavoriteItems] = useState(() => {
         const getFavorite = localStorage.getItem('favoriteItems');
+
         return getFavorite ? JSON.parse(getFavorite) : []
 
     })
     useEffect(() => {
         localStorage.setItem('favoriteItems', JSON.stringify(favoriteItems));
+        // localStorage.removeItem('favoriteItems')
     }, [favoriteItems]);
 
 
@@ -53,7 +55,7 @@ export const AuthProvider = ({ children }) => {
                         ? { ...cartItem, quantity: cartItem.quantity }
                         : cartItem
                 )
-                : [...cartItems, { ...item }];
+                : [...cartItems,{ ...item, quantity: 1 }];
 
             setCartItems(updatedCartItems);
         }

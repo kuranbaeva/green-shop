@@ -5,14 +5,11 @@
     border-radius: 10px;
     overflow: hidden;
     transition: transform 0.3s, box-shadow 0.3s;
-    // display: flex;
-    // flex-wrap: wrap;
-    // flex: 1 1 270px;
-    display: grid;
-    flex: 1 0 100%;
-    align-items: flex-start;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-
+    // display: grid;
+    // flex: 1 0 100%;
+    // align-items: flex-start;
+    // grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+// gap: 20px;
     &:hover {
         transform: scale(1.05);
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -143,7 +140,6 @@ width: 100%;
             }
         }
         .cart {
-          
             bottom: 80px;
             left: 50px;
             img {

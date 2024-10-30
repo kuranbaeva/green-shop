@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
 import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react';
@@ -106,14 +107,23 @@ export default function Shop() {
   };
 
 
+   const handleMouseEnter = (path) => {
+                setHover(path);
+            };
+        
+            const handleMouseLeave = () => {
+                setHover(null);
+            };
+        
   return (
     <>
-      <div className={styles.header}>
-        <Header />
-      </div>
-      <div className={styles.breadcrumbs}>
-        <Breadcrumbs />
-      </div>
+     
+        <div className={styles.header}>
+          <Header />
+        </div>
+        <div className={styles.breadcrumbs}>
+          <Breadcrumbs />
+        </div>
 
       <section className={styles.shop}>
         <div className="container">
@@ -126,7 +136,6 @@ export default function Shop() {
                   <p>Изображения отсутствуют</p>
                 )}
               </div>
-
               <div className={styles.shop_item_content_block}>
                 <div className={styles.shop_item_content_block_icon}>
                   <Search className={styles.icon_block} />

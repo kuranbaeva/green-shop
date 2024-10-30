@@ -17,7 +17,7 @@ export default function Home() {
     const handleCategoryChange = (category) => {
         navigate(`/${category}`);
     };
-    const [loading, setLoading] = useState(true);
+   
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);

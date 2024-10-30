@@ -12,9 +12,9 @@ import Header from '../../components/Header/Header'
 export default function WishList() {
     const [loading, setLoading] = useState(true)
     const { favoriteItems,
-        setFavoriteItems,
-        handleAddToFavorite,
-        handleCartClick,
+         setFavoriteItems,
+          handleAddToFavorite,
+           handleCartClick,
         isItemInCart,
         isItemInFavorite,
         handleFavClick } = useAuth()
@@ -40,6 +40,7 @@ export default function WishList() {
                 <Breadcrumbs />
                 <div className="container">
                     <section className={styles.wishlist}>
+                        {/* <div className={styles.wrap}> */}
                         <SideBar />
                         <div className={styles.wishlist_item}>
                             {favoriteItems.map((item) => (
@@ -58,20 +59,31 @@ export default function WishList() {
                                                     }
                                                 </button>
                                             </div>
-                                          
-                                        </div>
-                                    </div>
-                                    <div className={styles.card_infor}>
-                                        <h4>{item.name}</h4>
-                                        <p>${item.price}</p>
-                                    </div>
-                                </div>
-                            ))}
+                                            <div className={styles.btn}>
+                                            <button
+                                    onClick={() => handleFavClick(item)}
+                                >
+                                    {isItemInFavorite(item.id)
+                                      ? <img src="/assets/img/fullHeart.png" alt="" />
+                                      : <img src="/assets/img/heart.png" alt="" />
+                                    }
+                                </button>
+
+                            </div>
                         </div>
-
-
-                    </section>
+                    </div>
+                    <div className={styles.card_infor}>
+                        <h4>{item.name}</h4>
+                        <p>${item.price}</p>
+                    </div>
                 </div>
+            ))}
+                    </div>
+                 
+
+                </section>
+            </div>
+           
             </div>
         </>
     )
