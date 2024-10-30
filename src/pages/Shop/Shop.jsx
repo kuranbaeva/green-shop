@@ -1,32 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useParams, Link, useNavigate } from 'react-router-dom';
-import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react';
-import styles from '../../pages/Shop/Shop.module.scss';
-import Star from '../../components/UI/Star/StarBtn';
-import Footer from '../../components/Footer/Footer';
-import Breadcrumbs from '../../components/Breadcrumbs/Crumbs';
-import Slider from 'react-slick';
+import React, { useState, useEffect } from 'react'
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom'
+import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
+import styles from '../../pages/Shop/Shop.module.scss'
+import Star from '../../components/UI/Star/StarBtn'
+import Footer from '../../components/Footer/Footer'
+import Breadcrumbs from '../../components/Breadcrumbs/Crumbs'
+import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import SliderCard from '../../components/SliderCard/SliderCard';
-import Count from '../../components/Count/Count';
-import { useAuth } from '../../AuthContext';
-import axios from '../../axios';
-import Header from '../../components/Header/Header';
-import LoadingBar from '../../components/UI/Loading/Loading';
+import SliderCard from '../../components/SliderCard/SliderCard'
+import Count from '../../components/Count/Count'
+import { useAuth } from '../../AuthContext'
+import axios from '../../axios'
+import Header from '../../components/Header/Header'
+import LoadingBar from '../../components/UI/Loading/Loading'
 import ImageCarousel from '../../components/CarusellImg/Image';
 
 export default function Shop() {
   const [onLike, setOnLike] = useState(false);
   const [activeSection, setActiveSection] = useState('desc');
-  const { handleQuantityChange, handleAddToCart } = useAuth();
+  const { handleCountChange, handleAddToCart, cartItems } = useAuth();
+
   const [randomItem, setRandomItem] = useState(null);
   const location = useLocation();
   const { id } = useParams();
   const item = location.state?.item || randomItem;
-  const [quantity, setQuantity] = useState(item?.quantity || 1);
+  const [count, setCount] = useState(1);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchRandomItem = async () => {
@@ -44,7 +45,7 @@ export default function Shop() {
     if (!item) {
       fetchRandomItem();
     } else {
-      setQuantity(item.quantity);
+      setCount(item.count);
       setLoading(false);
     }
   }, [item]);
@@ -61,19 +62,9 @@ export default function Shop() {
     navigate('/check', { state: { item } });
   };
 
-  const handleMouseEnter = (path) => {
-    setHover(path);
-  };
-
-  const handleMouseLeave = () => {
-    setHover(null);
-  };
-
-
   if (loading) {
     return <LoadingBar />;
   }
-
   const settings = {
     dots: false,
     infinite: true,
@@ -106,8 +97,17 @@ export default function Shop() {
   };
 
 
+  const handleMouseEnter = (path) => {
+    setHover(path);
+  };
+
+  const handleMouseLeave = () => {
+    setHover(null);
+  };
+
   return (
     <>
+
       <div className={styles.header}>
         <Header />
       </div>
@@ -117,9 +117,10 @@ export default function Shop() {
 
       <section className={styles.shop}>
         <div className="container">
+
           <div className={styles.shop_item}>
             <div className={styles.shop_item_content}>
-              <div className={`${styles.shop_item_content_species} ${styles.species_block}`}>
+              <div className={styles.shop_item_content_species}>
                 {item.images && item.images.length > 0 ? (
                   <ImageCarousel images={item.images.map(imgObj => imgObj.image)} />
                 ) : (
@@ -130,16 +131,16 @@ export default function Shop() {
               <div className={styles.shop_item_content_block}>
                 <div className={styles.shop_item_content_block_icon}>
                   <Search className={styles.icon_block} />
-                  <div className={`${styles.like_block}`}>
-                    <button onClick={handleOnLike}>
+                  <div className={`${styles.like_block} `}>
+                    <button onClick={handleOnLike} >
                       {onLike ? <img src="/assets/img/fullHeart.png" alt="" /> : <img src="/assets/img/greenHeart.png" alt="" />}
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-
             <div className={styles.shop_item_infor}>
+
               <div className={styles.shop_item_infor_title}>
                 <h2>{item.name}</h2>
                 <div className={styles.shop_item_infor_title_price}>
@@ -157,10 +158,10 @@ export default function Shop() {
               <div className={styles.shop_item_infor_cart}>
                 <Count
                   itemId={item.id}
-                  initialQuantity={item.quantity || 1}
-                  onQuantityChange={(newQuantity) => {
-                    setQuantity(newQuantity);
-                    handleQuantityChange(item.id, newQuantity);
+                  initialCount={item.count || 1}
+                  onCountChange={(newCount) => {
+                    setCount(newCount)
+                    handleCountChange(item.id, newCount);
                   }}
                   stock={item.stock}
                 />
@@ -168,7 +169,7 @@ export default function Shop() {
                   <button onClick={handleBuyNow}>Buy Now</button>
                 </div>
                 <div className={`${styles.shop_item_infor_cart_add} ${styles.block}`}>
-                  <button onClick={() => handleAddToCart({ ...item, quantity })}>
+                  <button onClick={() => handleAddToCart({ ...item, count })}>
                     <p >
                       add to cart
                     </p>
@@ -179,7 +180,7 @@ export default function Shop() {
                 </div>
 
                 <div className={`${styles.img_add_none} ${styles.img_add} `}>
-                  <button onClick={() => handleAddToCart({ ...item, quantity })}>
+                  <button onClick={() => handleAddToCart({ ...item, count })}>
                     <img src="/assets/img/cartFot.png" alt="" />
                   </button>
                 </div>
@@ -189,7 +190,10 @@ export default function Shop() {
                     {onLike ? <img src="/assets/img/fullHeart.png" alt="" /> : <img src="/assets/img/greenHeart.png" alt="" />}
                   </button>
                 </div>
+
+
               </div>
+
               <div className={styles.shop_item_infor_deck}>
                 <h2>
                   <span>SKU:</span> 1995751877966
@@ -210,6 +214,7 @@ export default function Shop() {
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
           <div className={`${styles.shop_mini} ${styles.mini_block}`}>
@@ -270,15 +275,17 @@ export default function Shop() {
                     </h3>
                     <Count
                       itemId={item.id}
-                      initialQuantity={item.quantity || 1}
-                      onQuantityChange={(newQuantity) => {
-                        setQuantity(newQuantity);
-                        handleQuantityChange(item.id, newQuantity);
+                      initialCount={item.count || 1}
+                      onCountChange={(newCount) => {
+                        setCount(newCount)
+                        handleCountChange(item.id, newCount);
                       }}
                       stock={item.stock}
-
                     />
                   </div>
+
+
+
                   <div className={styles.shop_mini_bottom_count_price}>
                     <p>
                       $ {item.price}
@@ -295,12 +302,14 @@ export default function Shop() {
                     </button>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
-        </div>
-      </section>
 
+        </div>
+
+      </section>
       <section className={styles.description}>
         <div className='container'>
           <div className={styles.description_item}>
@@ -360,7 +369,6 @@ export default function Shop() {
           </div>
         </div>
       </section>
-
       <footer className={styles.footer}>
         <div className="container">
           <Footer />

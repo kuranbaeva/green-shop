@@ -12,12 +12,19 @@ export const AuthProvider = ({ children }) => {
         const getCartItems = localStorage.getItem('cartItems');
         return getCartItems ? JSON.parse(getCartItems) : [];
     });
+
+
+
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+
     }, [cartItems]);
+
+
 
     const [favoriteItems, setFavoriteItems] = useState(() => {
         const getFavorite = localStorage.getItem('favoriteItems');
+
         return getFavorite ? JSON.parse(getFavorite) : []
 
     })
@@ -50,19 +57,23 @@ export const AuthProvider = ({ children }) => {
             const updatedCartItems = findItem
                 ? cartItems.map(cartItem =>
                     cartItem.id === item.id
-                        ? { ...cartItem, quantity: cartItem.quantity }
+                        ? { ...cartItem, count: cartItem.count }
                         : cartItem
                 )
-                : [...cartItems, { ...item }];
+                : [...cartItems, {
+                    ...item,
+                    count: item?.count || 1
+                }];
 
             setCartItems(updatedCartItems);
+
         }
     };
 
 
-    const handleQuantityChange = (id, newQuantity) => {
+    const handleCountChange = (id, newCount) => {
         const updatedCartItems = cartItems.map(item =>
-            item.id === id ? { ...item, quantity: newQuantity } : item
+            item.id === id ? { ...item, count: newCount } : item
         );
         setCartItems(updatedCartItems);
     };
@@ -81,17 +92,14 @@ export const AuthProvider = ({ children }) => {
     };
 
 
+
+
     const isItemInFavorite = (id) => {
         return favoriteItems.some(cartItem => cartItem.id === id);
     };
 
 
     const handleFavClick = (item) => {
-        // if (favItems.includes(id)) {
-        //     setFavItems(favItems.filter(itemId => itemId !== id));
-        // } else {
-        //     setFavItems([...favItems, id]);
-        // }
         if (isItemInFavorite(item.id)) {
             const updatedFavoriteItems = favoriteItems.filter(favoriteItem => favoriteItem.id !== item.id);
             handleAddToFavorite(updatedFavoriteItems);
@@ -110,7 +118,24 @@ export const AuthProvider = ({ children }) => {
     };
     return (
 
-        <AuthContext.Provider value={{ handleLogout, isAuthenticated, isItemInCart, isItemInFavorite, setIsAuthenticated, cartItems, setCartItems, handleAddToCart, handleQuantityChange, totalPrice, setTotalPrice, handleCartClick, handleFavClick, favoriteItems, setFavoriteItems, getItemCount }}>
+        <AuthContext.Provider value={{
+            handleLogout,
+            isAuthenticated,
+            isItemInCart,
+            isItemInFavorite,
+            setIsAuthenticated,
+            cartItems,
+            setCartItems,
+            handleAddToCart,
+            handleCountChange,
+            totalPrice,
+            setTotalPrice,
+            handleCartClick,
+            handleFavClick,
+            favoriteItems,
+            setFavoriteItems,
+            getItemCount
+        }}>
 
             {children}
         </AuthContext.Provider>

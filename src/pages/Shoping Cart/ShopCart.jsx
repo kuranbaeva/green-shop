@@ -12,7 +12,7 @@ import Header from '../../components/Header/Header'
 
 
 export default function ShopCart() {
-    const { cartItems, setCartItems, handleQuantityChange, totalPrice, setTotalPrice } = useAuth();
+    const { cartItems, setCartItems, handleCountChange, totalPrice, setTotalPrice } = useAuth();
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -21,15 +21,19 @@ export default function ShopCart() {
     }, [setCartItems]);
 
     useEffect(() => {
-        const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-        setTotalPrice(total);
+        // const total = cartItems.reduce((acc, item) => acc +(+item.price)  * (+item.count), 0);
+        // setTotalPrice(total); 
+        const totalPrice = cartItems.reduce((acc, item) => acc + (item.price * (item.count || 1)), 0);
+        setTotalPrice(totalPrice);
     }, [cartItems]);
+
 
     const handleRemoveItem = (id) => {
         const updatedCart = cartItems.filter(item => item.id !== id);
         setCartItems(updatedCart);
         localStorage.setItem('cartItems', JSON.stringify(updatedCart));
     };
+
 
     useEffect(() => {
         setTimeout(() => {
@@ -40,7 +44,8 @@ export default function ShopCart() {
 
     const item = location.state?.item;
 
-    const [quantity, setQuantity] = useState(item?.quantity || 1);
+    const [count, setCount] = useState(item?.count || 1);
+
 
     return (
         <div>
@@ -85,20 +90,29 @@ export default function ShopCart() {
                                             </div>
                                             <div className={styles.price}>
                                                 <h3>${item.price}</h3>
+
                                             </div>
                                             <div className={styles.count}>
                                                 <Count
                                                     itemId={item.id}
-                                                    initialQuantity={item.quantity || 1}
-                                                    onQuantityChange={(newQuantity) => {
-                                                        setQuantity(newQuantity)
-                                                        handleQuantityChange(item.id, newQuantity);
+                                                    initialCount={item.count || 1}
+                                                    onCountChange={(newCount) => {
+                                                        setCount(newCount)
+                                                        handleCountChange(item.id, newCount);
                                                     }}
                                                     stock={item.stock}
                                                 />
+
                                             </div>
                                             <div className={styles.total}>
-                                                <h3>${(item.price * item.quantity).toFixed(2)}</h3>
+                                                <h3>${(item.price * item.count).toFixed(2)}</h3>
+                                                {console.log(item.price)
+                                                }
+                                                {console.log(item.count)
+                                                }
+                                                {console.log(totalPrice)
+                                                }
+                                                {/* <h3>${totalPrice}</h3> */}
                                             </div>
                                             <div className={styles.bin}>
                                                 <div onClick={() => handleRemoveItem(item.id)}>
@@ -125,10 +139,10 @@ export default function ShopCart() {
                                                 <div className={styles.count}>
                                                     <Count
                                                         itemId={item.id}
-                                                        initialQuantity={item.quantity || 1}
-                                                        onQuantityChange={(newQuantity) => {
-                                                            setQuantity(newQuantity)
-                                                            handleQuantityChange(item.id, newQuantity);
+                                                        initialCount={item.count || 1}
+                                                        onCountChange={(newCount) => {
+                                                            setCount(newCount)
+                                                            handleCountChange(item.id, newCount);
                                                         }}
                                                         stock={item.stock}
                                                     />
