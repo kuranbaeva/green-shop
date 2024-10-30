@@ -14,6 +14,8 @@ import LoadingBar from '../../components/UI/Loading/Loading';
 export default function Home() {
     const { category } = useParams();
     const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
     const handleCategoryChange = (category) => {
         navigate(`/${category}`);
     };
