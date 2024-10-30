@@ -31,7 +31,7 @@
 @media(max-width:1000px) {
     .plants {
         &_item {
-           gap: 0;
+         display: block;
         }
     }
 }

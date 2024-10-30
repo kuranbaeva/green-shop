@@ -60,11 +60,12 @@ export default function WishList() {
                                                 </button>
                                             </div>
                                             <div className={styles.btn}>
-                                                {/* <button onClick={() => handleFavClick(item.id)}>
-                                    {favItems.includes(item.id)
-                                        ? <img src="/assets/img/fullHeart.png" alt="" />
-                                        : <img src="/assets/img/heart.png" alt="" />
-
+                                            <button
+                                    onClick={() => handleFavClick(item)}
+                                >
+                                    {isItemInFavorite(item.id)
+                                      ? <img src="/assets/img/fullHeart.png" alt="" />
+                                      : <img src="/assets/img/heart.png" alt="" />
                                     }
                                 </button>
 
@@ -81,6 +82,8 @@ export default function WishList() {
                  
 
                 </section>
+            </div>
+           
             </div>
         </>
     )

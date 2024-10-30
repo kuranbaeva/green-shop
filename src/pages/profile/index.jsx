@@ -14,7 +14,7 @@ export default function Profile() {
     const [showModal, setShowModal] = useState(false);
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [error, setError] = useState({});
-    const { setIsAuthenticated,,handleLogout } = useAuth();
+    const { setIsAuthenticated,handleLogout } = useAuth();
     const [loading, setLoading] = useState(true);
 
     const [profile, setProfile] = useState({

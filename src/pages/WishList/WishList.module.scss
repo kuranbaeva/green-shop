@@ -4,9 +4,14 @@
     margin-top: 50px;
 
     &_item{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+    //   display: flex;
+    //   flex-wrap: wrap;
+    //   gap: 20px;
+    display: grid;
+    flex: 1 1 100%;
+    align-items: flex-start;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
 .card {
     max-width: 270px;
     margin: 0 auto;

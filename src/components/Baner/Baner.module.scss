@@ -98,16 +98,6 @@
 @media (max-width:1025px) {
     .main_page {
         &_item {
-
-            //   &_infor {
-            //     h2 { font-size: 24px; 
-            //       span{
-            //        font-size: 24px;
-            //       }
-            //   }
-            //     h5 { font-size: 11px; }
-            //     p { font-size: 12px; }
-            //   }
             &_img {
                 position: relative;
                 right: 50px;
@@ -117,14 +107,6 @@
                     bottom: 38px;
                     left: 45px;
                 }
-
-                .img2 {
-                    //   img{
-                    //         width: 300px;
-                    //   }
-
-                }
-
             }
         }
     }
@@ -195,7 +177,7 @@
                 }
 
                 p {
-                    // display: none;
+                
                     font-size: 14px;
                 }
 
@@ -209,8 +191,6 @@
                         text-transform: uppercase;
                         font-size: 16px;
                         font-weight: 700;
-                        // line-height: 20px;
-                        // text-align: left;
                         color: rgba(70, 163, 88, 1);
 
                         background: transparent;

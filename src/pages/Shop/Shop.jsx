@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation, useParams, Link, useNavigate } from 'react-router-dom'
 import { Search, Twitter, Linkedin, Mail, Facebook } from 'lucide-react'
 import styles from '../../pages/Shop/Shop.module.scss'
@@ -27,8 +27,8 @@ export default function Shop() {
   const [quantity, setQuantity] = useState(item?.quantity || 1);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true)
-  
- useEffect(() => {
+
+  useEffect(() => {
     const fetchRandomItem = async () => {
       try {
         const response = await axios.get('/product');
@@ -37,7 +37,7 @@ export default function Shop() {
         setLoading(false);
       } catch (error) {
         console.error('Ошибка при загрузке товара:', error);
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -94,9 +94,19 @@ export default function Shop() {
       },
     ],
   };
+
+
+   const handleMouseEnter = (path) => {
+                setHover(path);
+            };
+        
+            const handleMouseLeave = () => {
+                setHover(null);
+            };
+        
   return (
     <>
-      <div>
+     
         <div className={styles.header}>
           <Header />
         </div>
@@ -109,23 +119,16 @@ export default function Shop() {
 
             <div className={styles.shop_item}>
               <div className={styles.shop_item_content}>
-                <div className={`${styles.shop_item_content_species} ${styles.species_block}`}>
-                  {item.image && (
-                    <>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
-                      </div>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
-                      </div>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
-                      </div>
-                      <div className={styles.shop_item_content_species_img}>
-                        <img src={item.image} alt={item.name} />
-                      </div>
-                    </>
-                  )}
+                <div className={styles.shop_item_content_species}>
+                {item.images && Array.isArray(item.images) && item.images.length > 0 ? (
+                  item.images.map((imgObj, index) => (
+                    <div key={imgObj.id} className={styles.shop_item_content_species_img}>
+                      <img src={imgObj.image} alt={`${item.name} ${index + 1}`} />
+                    </div>
+                  ))
+                ) : (
+                  <p>Изображения отсутствуют</p>
+                )}
                 </div>
 
                 <div className={styles.shop_item_content_block}>
@@ -285,8 +288,8 @@ export default function Shop() {
 
                       />
                     </div>
-                    
-                    
+
+
 
                     <div className={styles.shop_mini_bottom_count_price}>
                       <p>
@@ -312,6 +315,71 @@ export default function Shop() {
           </div>
 
         </section>
-          </>
-  );
+         <section className={styles.description}>
+                    <div className='container'>
+                        <div className={styles.description_item}>
+                            <div className={styles.description_item_nav}>
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <button
+                                                className={activeSection === 'desc' ? styles.active : ''}
+                                                onClick={() => handleSectionChange('desc')}
+                                                onMouseEnter={() => handleMouseEnter('/')}
+                                                onMouseLeave={handleMouseLeave}
+                                            >
+                                                Product Description
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button
+                                                className={activeSection === 'reviews' ? styles.active : ''}
+                                                onClick={() => handleSectionChange('reviews')}
+                                                onMouseEnter={() => handleMouseEnter('/')}
+                                                onMouseLeave={handleMouseLeave}
+                                            >
+                                                Reviews
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div className={styles.description_item_title}>
+                                {activeSection === 'desc' && (
+                                    <div>
+                                        <p>{item.description}</p>
+                                    </div>
+                                )}
+                                {activeSection === 'reviews' && (
+                                    <div>
+                                        <p>
+                                            Customer reviews will appear here.
+                                        </p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section className={styles.products}>
+                    <div className='container'>
+                        <div className={styles.products_item}>
+                            <h4>
+                                Releted Products
+                            </h4>
+                            <div className={styles.products_item_cards}>
+                                <SliderCard />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <footer className={styles.footer}>
+                    <div className="container">
+                        <Footer />
+                    </div>
+                </footer>
+      </>
+      );
 }
